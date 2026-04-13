@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LeFodigital - Prototipo Educativo</title>
+<meta name="description" content="Prototipo web educativo con roles: Estudiante y Profesor.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width='100' height='100' rx='20' fill='%233a6b9e'/><text x='50' y='58' font-size='50' text-anchor='middle' fill='white' font-family='Arial'>E</text></svg>">
+<style>
+  :root{
+    --blue:#3a6b9e;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --muted:#666;
+    --accent:#2f5a86;
+    --success:#2e8b57;
+    --danger:#c53d3d;
+    --radius:12px;
+    --fw-heading:600;
+    --fw-regular:400;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+    background:linear-gradient(180deg,var(--bg),white);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.45;
+    padding-bottom:80px;
+  }
+
+  .wrap{max-width:1100px;margin:28px auto;padding:18px}
+
+  header.appbar{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:12px 18px;background:var(--card);border-radius:12px;
+    box-shadow:0 6px 18px rgba(18,35,57,0.06);
+  }
+  .logo{display:flex;gap:12px;align-items:center}
+  .logo .mark{
+    width:48px;height:48px;border-radius:10px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;
+  }
+  .app-title{font-weight:var(--fw-heading);font-size:18px}
+  .slogan{font-size:13px;color:var(--muted)}
+
+  nav.top-actions{display:flex;gap:8px;align-items:center}
+  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(47,90,134,0.12)}
+  .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(47,90,134,0.08)}
+
+  .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(18,35,57,0.05)}
+  .auth-grid{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:center}
+  .hero{padding:18px}
+  .hero h1{margin:0 0 8px 0;font-size:20px}
+  .hero p{margin:0;color:var(--muted)}
+
+  form{display:grid;gap:10px}
+  label{font-size:13px;color:var(--muted)}
+  input[type="text"],input[type="email"],input[type="password"],select,textarea{
+    width:100%;padding:10px;border-radius:8px;border:1px solid #e3e8ef;background:transparent;font-size:14px;
+  }
+  .small{font-size:13px;color:var(--muted)}
+
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:18px}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+
+  /* ── Module cards ── */
+  .module{
+    padding:14px;border-radius:12px;
+    background:linear-gradient(180deg,white,#fafcff);
+    display:flex;gap:12px;align-items:center;
+    border:1px solid rgba(18,35,57,0.06);
+    cursor:pointer;
+    transition:box-shadow .18s, transform .18s;
+  }
+  .module:hover{box-shadow:0 8px 24px rgba(47,90,134,0.13);transform:translateY(-2px);}
+  .module:focus{outline:2px solid var(--accent);outline-offset:2px;}
+
+  /* Icon wrapper */
+  .mod-icon{
+    flex-shrink:0;
+    width:48px;height:48px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .mod-icon svg{width:26px;height:26px;}
+
+  /* Per-module color themes */
+  .mod-icon.act  { background:#e8f3ff; }
+  .mod-icon.cur  { background:#edf7ed; }
+  .mod-icon.sim  { background:#f3eeff; }
+  .mod-icon.bib  { background:#fff8e6; }
+  .mod-icon.blog { background:#fff0f0; }
+  .mod-icon.info { background:#e6fbfb; }
+
+  .module h3{margin:0;font-size:15px}
+  .module p{margin:0;font-size:13px;color:var(--muted)}
+
+  .sidebar .card-block{display:flex;flex-direction:column;gap:12px}
+  .profile-mini{display:flex;gap:12px;align-items:center}
+  .avatar{width:64px;height:64px;border-radius:10px;background:linear-gradient(45deg,var(--blue),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-size:22px;font-weight:700}
+  .progress{height:10px;background:#e9eef7;border-radius:999px;overflow:hidden}
+  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--blue))}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .list .item{padding:12px;background:#fff;border-radius:10px;border:1px solid rgba(18,35,57,0.04);display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .meta{font-size:13px;color:var(--muted)}
+
+  .blog-list .post{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(18,35,57,0.04)}
+  .post h4{margin:0 0 6px 0}
+  .post p{margin:0;color:var(--muted)}
+
+  footer.sitefoot{position:fixed;left:0;right:0;bottom:0;background:var(--card);padding:10px 18px;border-top:1px solid rgba(18,35,57,0.03);display:flex;justify-content:center}
+  footer .inner{max-width:1100px;width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  footer .left{font-size:13px}
+  footer .right{display:flex;gap:12px}
+
+  .a11y-controls{display:flex;gap:8px;align-items:center}
+  .badge{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(58,107,158,0.08);font-size:13px;color:var(--muted)}
+
+  .muted{color:var(--muted)}
+  .text-right{text-align:right}
+  .hidden{display:none}
+  .kicker{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .mt{margin-top:10px}
+  .mb{margin-bottom:10px}
+
+  @media(max-width:900px){
+    .auth-grid{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header class="appbar card" role="banner" aria-label="Barra superior">
+    <div class="logo">
+      <div class="mark" aria-hidden="true">E</div>
+      <div>
+        <div class="app-title">LeFodigital</div>
+        <div class="slogan">La educación que evoluciona contigo</div>
+      </div>
+    </div>
+
+    <nav class="top-actions" aria-label="Acciones de la aplicación">
+      <div class="a11y-controls">
+        <button class="btn ghost" id="toggle-contrast" title="Alternar alto contraste">Alto contraste</button>
+        <button class="btn ghost" id="increase-text" title="Aumentar tamaño de texto">A+</button>
+        <button class="btn ghost" id="decrease-text" title="Disminuir tamaño de texto">A-</button>
+      </div>
+      <div id="auth-area"></div>
+    </nav>
+  </header>
+
+  <main id="main-view" class="mt">
+    <!-- AUTH SCREEN -->
+    <section id="auth-screen" class="card" aria-live="polite">
+      <div class="auth-grid">
+        <div class="hero">
+          <h1>Bienvenido a LeFodigital</h1>
+          <p>Regístrate o inicia sesión para acceder a tus cursos, actividades y simulaciones.</p>
+          <div class="kicker mt">Cuenta de demostración</div>
+          <div class="list">
+            <div class="item"><strong>Profesor:</strong> prof@demo.com / prof123</div>
+            <div class="item"><strong>Estudiante:</strong> est@demo.com / est123</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card-block card">
+            <div id="forms-area">
+              <form id="login-form" aria-label="Formulario de inicio de sesión">
+                <label for="login-email">Correo</label>
+                <input id="login-email" type="email" placeholder="tu@correo.com" required />
+                <label for="login-pass">Contraseña</label>
+                <input id="login-pass" type="password" placeholder="Contraseña" required />
+                <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px">
+                  <button type="submit" class="btn">Iniciar sesión</button>
+                  <button type="button" class="btn ghost" id="show-register">Crear cuenta</button>
+                </div>
+                <div class="small mt">¿Olvidaste tu contraseña? (demo)</div>
+              </form>
+
+              <form id="register-form" class="hidden" aria-label="Formulario de registro">
+                <label for="reg-name">Nombre completo</label>
+                <input id="reg-name" type="text" placeholder="Tu nombre" required />
+                <label for="reg-email">Correo electrónico</label>
+                <input id="reg-email" type="email" placeholder="tu@proveedor.com" required />
+                <label for="reg-pass">Contraseña</label>
+                <input id="reg-pass" type="password" placeholder="Crear contraseña" required />
+                <label for="reg-role">Tipo de usuario</label>
+                <select id="reg-role" required>
+                  <option value="">Selecciona...</option>
+                  <option value="estudiante">Estudiante</option>
+                  <option value="profesor">Profesor</option>
+                </select>
+                <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px">
+                  <button type="submit" class="btn">Registrar</button>
+                  <button type="button" class="btn ghost" id="show-login">Volver a iniciar</button>
+                </div>
+                <div class="small mt">Al registrarte aceptas los términos de uso (prototipo).</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard-screen" class="hidden" aria-live="polite">
+      <div class="grid">
+        <div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <h2 id="dash-title">Hola, usuario</h2>
+                <p class="muted" id="dash-sub">Bienvenido a tu panel</p>
+              </div>
+              <div class="badge" id="role-badge">Estudiante</div>
+            </div>
+
+            <div class="mt">
+              <div class="kicker">Eslóganes</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <div class="badge">Aprender es crecer</div>
+                <div class="badge">La educación que evoluciona contigo</div>
+                <div class="badge">Tu crecimiento, nuestra misión</div>
+              </div>
+            </div>
+
+            <div class="mt">
+              <h3>Módulos disponibles</h3>
+              <div class="cards mt" id="modules">
+
+                <!-- Actividades -->
+                <div class="module" data-module="actividades" role="button" tabindex="0">
+                  <div class="mod-icon act" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="5" y="2" width="14" height="20" rx="2" stroke="#3a6b9e" stroke-width="1.8" fill="none"/>
+                      <path d="M9 7h6M9 11h6M9 15h4" stroke="#3a6b9e" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="7" cy="7" r="1" fill="#3a6b9e"/>
+                      <circle cx="7" cy="11" r="1" fill="#3a6b9e"/>
+                      <path d="M7 15.5l.8.8 1.6-1.6" stroke="#3a6b9e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Actividades</h3>
+                    <p>Ver actividades asignadas y completar tareas</p>
+                  </div>
+                </div>
+
+                <!-- Cursos -->
+                <div class="module" data-module="cursos" role="button" tabindex="0">
+                  <div class="mod-icon cur" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#2e8b57" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#2e8b57" stroke-width="1.8" fill="none"/>
+                      <path d="M9 7h7M9 11h5" stroke="#2e8b57" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Cursos</h3>
+                    <p>Explorar y gestionar los cursos</p>
+                  </div>
+                </div>
+
+                <!-- Simulaciones -->
+                <div class="module" data-module="simulaciones" role="button" tabindex="0">
+                  <div class="mod-icon sim" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9 3h6v8l3.5 7a1 1 0 0 1-.93 1.4H6.43a1 1 0 0 1-.93-1.4L9 11V3z" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                      <path d="M9 3H7M15 3h2" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"/>
+                      <circle cx="11.5" cy="16" r="1" fill="#7c3aed"/>
+                      <circle cx="14" cy="13.5" r="0.8" fill="#a78bfa"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Simulaciones</h3>
+                    <p>Acceder a simulaciones interactivas externas</p>
+                  </div>
+                </div>
+
+                <!-- Biblioteca -->
+                <div class="module" data-module="biblioteca" role="button" tabindex="0">
+                  <div class="mod-icon bib" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="3" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8" fill="none"/>
+                      <rect x="9" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8" fill="none"/>
+                      <path d="M15 5l4 1.5v15l-4-1.5V5z" stroke="#d97706" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Biblioteca</h3>
+                    <p>Enlaces a recursos online</p>
+                  </div>
+                </div>
+
+                <!-- Blog -->
+                <div class="module" data-module="blog" role="button" tabindex="0">
+                  <div class="mod-icon blog" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 20h9" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/>
+                      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#dc2626" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Blog</h3>
+                    <p>Publicar artículos y comentar</p>
+                  </div>
+                </div>
+
+                <!-- Sobre nosotros -->
+                <div class="module" data-module="sobre" role="button" tabindex="0">
+                  <div class="mod-icon info" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="9" stroke="#0891b2" stroke-width="1.8" fill="none"/>
+                      <path d="M12 11v6" stroke="#0891b2" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="12" cy="7.5" r="1.2" fill="#0891b2"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3>Sobre nosotros</h3>
+                    <p>Información del sistema y contacto</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div id="content-area" class="mt"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="card card-block">
+            <div class="profile-mini">
+              <div class="avatar" id="mini-avatar">U</div>
+              <div>
+                <div id="mini-name">Nombre</div>
+                <div class="meta" id="mini-role">Rol</div>
+                <div style="margin-top:8px">
+                  <div class="muted">Progreso</div>
+                  <div class="progress mt" aria-hidden="true"><i id="progress-bar" style="width:20%"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt">
+              <div class="kicker">Puntos y Niveles</div>
+              <div id="points">Puntos: 0</div>
+              <div id="level">Nivel: 1</div>
+              <div class="mt">
+                <button class="btn" id="btn-profile">Ver perfil</button>
+                <button class="btn ghost" id="btn-logout">Cerrar sesión</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt">
+            <div class="kicker">Novedades</div>
+            <div class="list" id="news-list">
+              <div class="item">Bienvenido a LeFodigital — Protótipo</div>
+              <div class="item">Recuerda completar tus actividades</div>
+            </div>
+          </div>
+
+          <div class="card mt" id="teacher-controls" style="display:none">
+            <div class="kicker">Panel Profesor</div>
+            <button class="btn" id="btn-create-activity">Crear actividad</button>
+            <button class="btn ghost" id="btn-create-course">Crear curso</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sitefoot" role="contentinfo" aria-label="Pie de página">
+    <div class="inner">
+      <div class="left">LeFodigital — Aprender es crecer · contacto: admin@LeFodigital.demo</div>
+      <div class="right">
+        <a class="muted" href="#" aria-label="Políticas">Política de privacidad</a>
+        <a class="muted" href="#" aria-label="Redes sociales">Twitter</a>
+        <a class="muted" href="#" aria-label="Redes sociales">Facebook</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- Templates -->
+<template id="activities-template">
+  <div class="card">
+    <h3>Actividades</h3>
+    <div id="activities-list" class="mt list"></div>
+    <div class="mt">
+      <h4>Historial</h4>
+      <div id="activities-history" class="list mt"></div>
+    </div>
+  </div>
+</template>
+
+<template id="create-activity-template">
+  <div class="card">
+    <h3>Crear actividad</h3>
+    <form id="create-activity-form">
+      <label>Título</label>
+      <input id="act-title" required />
+      <label>Descripción</label>
+      <textarea id="act-desc" rows="3"></textarea>
+      <label>Puntos</label>
+      <input id="act-points" type="number" min="1" value="10" required />
+      <label>Fecha límite</label>
+      <input id="act-due" type="date" />
+      <label>Curso (opcional)</label>
+      <input id="act-course" />
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" type="submit">Crear</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template id="courses-template">
+  <div class="card">
+    <h3>Cursos</h3>
+    <div id="courses-list" class="mt list"></div>
+  </div>
+</template>
+
+<template id="create-course-template">
+  <div class="card">
+    <h3>Crear curso</h3>
+    <form id="create-course-form">
+      <label>Nombre del curso</label>
+      <input id="course-name" required />
+      <label>Descripción</label>
+      <textarea id="course-desc" rows="3"></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" type="submit">Crear curso</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template id="simulations-template">
+  <div class="card">
+    <h3>Simulaciones</h3>
+    <div class="mt list" id="sim-list">
+      <div class="item"><div><strong>PhET: Movimiento</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://phet.colorado.edu">Abrir</a></div></div>
+      <div class="item"><div><strong>Genially: Laboratorio</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://genial.ly">Abrir</a></div></div>
+      <div class="item"><div><strong>Educaplay: Juegos</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://educaplay.com">Abrir</a></div></div>
+    </div>
+  </div>
+</template>
+
+<template id="biblioteca-template">
+  <div class="card">
+    <h3>Biblioteca online</h3>
+    <div class="mt list">
+      <div class="item"><div><strong>Biblioteca Virtual</strong><div class="meta">Enlace de referencia</div></div><div><a target="_blank" rel="noopener" href="https://www.google.com/search?q=biblioteca+online">Abrir</a></div></div>
+      <div class="item"><div><strong>Recursos educativos</strong><div class="meta">Artículos y PDFs</div></div><div><a target="_blank" rel="noopener" href="https://scholar.google.com">Abrir</a></div></div>
+    </div>
+  </div>
+</template>
+
+<template id="blog-template">
+  <div class="card">
+    <h3>Blog</h3>
+    <div id="blog-create" class="mt"></div>
+    <div id="blog-list" class="mt blog-list"></div>
+  </div>
+</template>
+
+<template id="blog-create-template">
+  <form id="create-post-form" class="card">
+    <label>Título</label>
+    <input id="post-title" required />
+    <label>Contenido</label>
+    <textarea id="post-content" rows="4" required></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" type="submit">Publicar</button>
+    </div>
+  </form>
+</template>
+
+<template id="profile-template">
+  <div class="card">
+    <h3>Perfil</h3>
+    <label>Nombre</label>
+    <input id="profile-name" />
+    <label>Correo</label>
+    <input id="profile-email" disabled />
+    <label>Institución</label>
+    <input id="profile-institution" />
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" id="save-profile">Guardar</button>
+    </div>
+  </div>
+</template>
+
+<template id="contact-template">
+  <div class="card">
+    <h3>Contactar administración</h3>
+    <form id="contact-form">
+      <label>Asunto</label>
+      <input id="contact-subject" required />
+      <label>Mensaje</label>
+      <textarea id="contact-message" rows="4" required></textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn" type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template id="about-template">
+  <div class="card">
+    <h3>Sobre nosotros</h3>
+    <p class="muted">LeFodigital es un prototipo educativo diseñado para demostrar funciones clave de una plataforma de aprendizaje: gestión de actividades, cursos, simulaciones y un espacio colaborativo tipo blog. Este prototipo es una maqueta funcional sin backend.</p>
+    <h4 class="mt">Cómo contactarnos</h4>
+    <p class="muted">admin@LeFodigital.demo</p>
+  </div>
+</template>
+
+<script>
+const DB_KEY = 'LeFodigital_db_v1';
+function loadDB(){
+  const raw = localStorage.getItem(DB_KEY);
+  if(!raw){
+    const initial = { users:[], activities:[], courses:[], posts:[], contact:[] };
+    initial.users.push({id:genId(), name:'Profesor Demo', email:'prof@demo.com', pass:'prof123', role:'profesor', points:0, level:1, avatar:null});
+    initial.users.push({id:genId(), name:'Estudiante Demo', email:'est@demo.com', pass:'est123', role:'estudiante', points:0, level:1, avatar:null});
+    localStorage.setItem(DB_KEY, JSON.stringify(initial));
+    return initial;
+  }
+  try{ return JSON.parse(raw); }catch(e){ return {users:[],activities:[],courses:[],posts:[],contact:[]} }
+}
+function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+function genId(){ return 'id_'+Math.random().toString(36).slice(2,9); }
+function byId(id, arr){ return arr.find(x=>x.id===id) }
+function findUserByEmail(db, email){ return db.users.find(u=>u.email.toLowerCase()===email.toLowerCase()); }
+
+let DB = loadDB();
+let SESSION = null;
+const AUTH_KEY = 'LeFodigital_session';
+
+function saveSession(sess){ SESSION=sess; localStorage.setItem(AUTH_KEY, JSON.stringify(sess)); }
+function loadSession(){ const raw=localStorage.getItem(AUTH_KEY); if(raw){ try{ SESSION=JSON.parse(raw); }catch(e){ SESSION=null; } } }
+function clearSession(){ SESSION=null; localStorage.removeItem(AUTH_KEY); }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  loadSession(); DB=loadDB();
+  setupAuthArea(); setupHandlers(); checkLoggedIn();
+});
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+function setupAuthArea(){
+  const authArea = $('#auth-area');
+  authArea.innerHTML = `<button class="btn" id="btn-open-auth">Iniciar / Registrar</button>`;
+  $('#btn-open-auth').addEventListener('click', ()=>{ showAuth(); });
+}
+
+function showAuth(){
+  $('#auth-screen').classList.remove('hidden');
+  $('#dashboard-screen').classList.add('hidden');
+}
+
+function showDashboard(){
+  $('#auth-screen').classList.add('hidden');
+  $('#dashboard-screen').classList.remove('hidden');
+  renderDashboard();
+}
+
+function setupHandlers(){
+  $('#show-register').addEventListener('click', ()=>{
+    $('#login-form').classList.add('hidden');
+    $('#register-form').classList.remove('hidden');
+  });
+  $('#show-login').addEventListener('click', ()=>{
+    $('#login-form').classList.remove('hidden');
+    $('#register-form').classList.add('hidden');
+  });
+
+  $('#register-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name=$('#reg-name').value.trim(), email=$('#reg-email').value.trim().toLowerCase();
+    const pass=$('#reg-pass').value, role=$('#reg-role').value;
+    if(!name||!email||!pass||!role){ alert('Completa todos los campos'); return; }
+    if(findUserByEmail(DB,email)){ alert('Ya existe una cuenta con ese correo'); return; }
+    const user={id:genId(),name,email,pass,role,points:0,level:1,avatar:null,institution:''};
+    DB.users.push(user); saveDB(DB);
+    alert('Cuenta creada. Inicia sesión');
+    $('#show-login').click(); $('#register-form').reset();
+  });
+
+  $('#login-form').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const email=$('#login-email').value.trim().toLowerCase(), pass=$('#login-pass').value;
+    const user=findUserByEmail(DB,email);
+    if(!user||user.pass!==pass){ alert('Credenciales incorrectas'); return; }
+    const sess={userId:user.id, token:genId(), created:Date.now()};
+    saveSession(sess); renderAuthHeader(); checkLoggedIn();
+  });
+
+  $('#toggle-contrast').addEventListener('click', ()=>{
+    document.body.classList.toggle('high-contrast');
+    if(document.body.classList.contains('high-contrast')){
+      document.documentElement.style.setProperty('--bg','#e6f0ff');
+      document.documentElement.style.setProperty('--card','#fffef8');
+      document.documentElement.style.setProperty('--accent','#14394f');
+    } else {
+      document.documentElement.style.removeProperty('--bg');
+      document.documentElement.style.removeProperty('--card');
+      document.documentElement.style.removeProperty('--accent');
+    }
+  });
+  $('#increase-text').addEventListener('click', ()=>{ adjustTextSize(1); });
+  $('#decrease-text').addEventListener('click', ()=>{ adjustTextSize(-1); });
+
+  document.addEventListener('click', (e)=>{
+    const el=e.target.closest('.module');
+    if(el){ openModule(el.dataset.module); }
+  });
+}
+
+function adjustTextSize(delta){
+  const cur=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
+  document.documentElement.style.fontSize=Math.max(12,Math.min(20,cur+delta))+'px';
+}
+
+function checkLoggedIn(){
+  loadSession();
+  if(SESSION&&SESSION.userId){
+    const user=byId(SESSION.userId,DB.users);
+    if(user){ renderAuthHeader(); showDashboard(); }
+    else{ clearSession(); showAuth(); }
+  } else { renderAuthHeader(); showAuth(); }
+}
+
+function renderAuthHeader(){
+  const authArea=$('#auth-area');
+  if(SESSION&&SESSION.userId){
+    const user=byId(SESSION.userId,DB.users);
+    authArea.innerHTML=`
+      <div style="display:flex;gap:8px;align-items:center">
+        <div style="text-align:right;margin-right:6px">
+          <div style="font-weight:600">${escapeHtml(user.name)}</div>
+          <div class="muted" style="font-size:12px">${escapeHtml(user.role)}</div>
+        </div>
+        <button class="btn secondary" id="header-profile">Mi perfil</button>
+        <button class="btn" id="header-logout">Salir</button>
+      </div>`;
+    $('#header-logout').addEventListener('click',()=>{ clearSession(); renderAuthHeader(); checkLoggedIn(); });
+    $('#header-profile').addEventListener('click',()=>{ openProfile(); });
+  } else {
+    authArea.innerHTML=`<button class="btn" id="btn-open-auth">Iniciar / Registrar</button>`;
+    $('#btn-open-auth').addEventListener('click',()=>{ showAuth(); });
+  }
+}
+
+function renderDashboard(){
+  const user=byId(SESSION.userId,DB.users); if(!user) return;
+  $('#dash-title').textContent=`Hola, ${user.name.split(' ')[0]||user.name}`;
+  $('#dash-sub').textContent=`Rol: ${user.role}`;
+  $('#mini-avatar').textContent=(user.name[0]||'U').toUpperCase();
+  $('#mini-name').textContent=user.name;
+  $('#mini-role').textContent=user.role;
+  $('#points').textContent='Puntos: '+(user.points||0);
+  $('#level').textContent='Nivel: '+(user.level||1);
+  $('#progress-bar').style.width=Math.min(100,(user.points||0)%100)+'%';
+  $('#role-badge').textContent=user.role.charAt(0).toUpperCase()+user.role.slice(1);
+  $('#teacher-controls').style.display=(user.role==='profesor')?'block':'none';
+  $('#btn-create-activity').onclick=()=>{ openModule('create-activity'); };
+  $('#btn-create-course').onclick=()=>{ openModule('create-course'); };
+  $('#btn-profile').onclick=()=>{ openProfile(); };
+  $('#btn-logout').onclick=()=>{ clearSession(); renderAuthHeader(); checkLoggedIn(); };
+  openModule('actividades');
+}
+
+function openModule(name){
+  const area=$('#content-area'); area.innerHTML='';
+  if(name==='actividades'){
+    area.appendChild(document.getElementById('activities-template').content.cloneNode(true));
+    renderActivities();
+  } else if(name==='create-activity'){
+    area.appendChild(document.getElementById('create-activity-template').content.cloneNode(true));
+    $('#create-activity-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const title=$('#act-title').value.trim(), desc=$('#act-desc').value.trim();
+      const points=parseInt($('#act-points').value)||10, due=$('#act-due').value||null, course=$('#act-course').value.trim()||null;
+      DB.activities.push({id:genId(),title,desc,points,due,course,created:Date.now(),author:SESSION.userId,assignedTo:null,completedBy:[]});
+      saveDB(DB); alert('Actividad creada'); openModule('actividades');
+    });
+  } else if(name==='cursos'){
+    area.appendChild(document.getElementById('courses-template').content.cloneNode(true));
+    renderCourses();
+  } else if(name==='create-course'){
+    area.appendChild(document.getElementById('create-course-template').content.cloneNode(true));
+    $('#create-course-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const cname=$('#course-name').value.trim(), desc=$('#course-desc').value.trim();
+      DB.courses.push({id:genId(),name:cname,desc,created:Date.now(),owner:SESSION.userId});
+      saveDB(DB); alert('Curso creado'); openModule('cursos');
+    });
+  } else if(name==='simulaciones'){
+    area.appendChild(document.getElementById('simulations-template').content.cloneNode(true));
+  } else if(name==='biblioteca'){
+    area.appendChild(document.getElementById('biblioteca-template').content.cloneNode(true));
+  } else if(name==='blog'){
+    area.appendChild(document.getElementById('blog-template').content.cloneNode(true));
+    renderBlog();
+  } else if(name==='sobre'){
+    area.appendChild(document.getElementById('about-template').content.cloneNode(true));
+    area.appendChild(document.getElementById('contact-template').content.cloneNode(true));
+    $('#contact-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      DB.contact.push({id:genId(),subj:$('#contact-subject').value.trim(),msg:$('#contact-message').value.trim(),from:SESSION.userId,created:Date.now()});
+      saveDB(DB); alert('Tu mensaje ha sido enviado (guardado localmente).'); $('#contact-form').reset();
+    });
+  }
+}
+
+function renderActivities(){
+  const list=$('#activities-list'), history=$('#activities-history');
+  const user=byId(SESSION.userId,DB.users);
+  list.innerHTML=''; history.innerHTML='';
+  if(user.role==='profesor'){
+    DB.activities.slice().reverse().forEach(act=>{
+      const item=document.createElement('div'); item.className='item';
+      item.innerHTML=`<div><strong>${escapeHtml(act.title)}</strong><div class="meta">${escapeHtml(act.desc||'')}</div></div>
+        <div style="text-align:right"><div class="meta">Puntos: ${act.points}</div>
+          <div style="margin-top:6px">
+            <button class="btn ghost small" data-act="${act.id}" data-action="assign">Asignar a todos</button>
+            <button class="btn ghost small" data-act="${act.id}" data-action="delete">Eliminar</button>
+          </div></div>`;
+      list.appendChild(item);
+    });
+    list.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const id=b.dataset.act, action=b.dataset.action;
+        if(action==='assign'){
+          const a=byId(id,DB.activities); if(a){ a.assignedTo='all'; saveDB(DB); alert('Asignada a todos'); renderActivities(); }
+        } else if(action==='delete'){
+          if(confirm('Eliminar actividad?')){ DB.activities=DB.activities.filter(x=>x.id!==id); saveDB(DB); renderActivities(); }
+        }
+      });
+    });
+  } else {
+    const assigned=DB.activities.filter(a=>a.assignedTo==='all'||a.assignedTo===null);
+    if(assigned.length===0){ list.innerHTML=`<div class="muted">No tienes actividades asignadas.</div>`; }
+    else {
+      assigned.forEach(act=>{
+        const done=(act.completedBy||[]).includes(user.id);
+        const item=document.createElement('div'); item.className='item';
+        item.innerHTML=`<div><strong>${escapeHtml(act.title)}</strong><div class="meta">${escapeHtml(act.desc||'')}</div></div>
+          <div style="text-align:right"><div class="meta">Puntos: ${act.points}</div>
+            <div style="margin-top:8px">${done?'<span class="muted">Completada</span>':`<button class="btn" data-act="${act.id}" data-action="complete">Completar</button>`}</div>
+          </div>`;
+        list.appendChild(item);
+      });
+      list.querySelectorAll('button').forEach(b=>{
+        b.addEventListener('click',()=>{
+          const id=b.dataset.act, a=byId(id,DB.activities); if(!a) return;
+          if(confirm('Marcar actividad como completada y recibir puntos?')){
+            a.completedBy=a.completedBy||[];
+            if(!a.completedBy.includes(user.id)){
+              a.completedBy.push(user.id);
+              const u=byId(user.id,DB.users);
+              u.points=(u.points||0)+a.points;
+              u.level=Math.max(1,Math.floor(u.points/100)+1);
+              saveDB(DB); renderDashboard(); renderActivities();
+              alert('Actividad completada. Puntos otorgados: '+a.points);
+            }
+          }
+        });
+      });
+    }
+    DB.activities.filter(a=>(a.completedBy||[]).includes(user.id)).forEach(a=>{
+      const it=document.createElement('div'); it.className='item';
+      it.innerHTML=`<div>${escapeHtml(a.title)}</div><div class="meta">${new Date(a.created).toLocaleDateString()}</div>`;
+      history.appendChild(it);
+    });
+  }
+}
+
+function renderCourses(){
+  const el=$('#courses-list'); el.innerHTML='';
+  if(DB.courses.length===0){ el.innerHTML='<div class="muted">No hay cursos creados.</div>'; return; }
+  DB.courses.slice().reverse().forEach(c=>{
+    const item=document.createElement('div'); item.className='item';
+    item.innerHTML=`<div><strong>${escapeHtml(c.name)}</strong><div class="meta">${escapeHtml(c.desc||'')}</div></div>
+      <div style="text-align:right"><div class="meta">Instructor: ${escapeHtml((byId(c.owner,DB.users)||{}).name||'—')}</div></div>`;
+    el.appendChild(item);
+  });
+}
+
+function renderBlog(){
+  const createArea=$('#blog-create'); createArea.innerHTML='';
+  const listArea=$('#blog-list'); listArea.innerHTML='';
+  createArea.appendChild(document.getElementById('blog-create-template').content.cloneNode(true));
+  $('#create-post-form').addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const title=$('#post-title').value.trim(), content=$('#post-content').value.trim();
+    if(!title||!content) return;
+    DB.posts.push({id:genId(),title,content,author:SESSION.userId,created:Date.now(),comments:[]});
+    saveDB(DB); $('#create-post-form').reset(); renderBlog();
+  });
+  if(DB.posts.length===0){ listArea.innerHTML='<div class="muted">No hay publicaciones aún.</div>'; return; }
+  DB.posts.slice().reverse().forEach(p=>{
+    const post=document.createElement('div'); post.className='post';
+    post.innerHTML=`<h4>${escapeHtml(p.title)}</h4><div class="meta">Por ${escapeHtml((byId(p.author,DB.users)||{}).name||'Usuario')} · ${new Date(p.created).toLocaleString()}</div><p class="mt">${escapeHtml(p.content)}</p>`;
+    const comments=document.createElement('div'); comments.style.marginTop='8px';
+    (p.comments||[]).forEach(c=>{
+      const cm=document.createElement('div'); cm.className='item';
+      cm.innerHTML=`<div><strong>${escapeHtml((byId(c.author,DB.users)||{}).name||'Usuario')}</strong><div class="meta">${escapeHtml(c.text)}</div></div><div class="meta">${new Date(c.created).toLocaleString()}</div>`;
+      comments.appendChild(cm);
+    });
+    const cform=document.createElement('form'); cform.className='mt';
+    cform.innerHTML=`<input placeholder="Escribe un comentario..." required style="padding:8px;border-radius:8px;border:1px solid #eee;width:100%"/><div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn" type="submit">Comentar</button></div>`;
+    cform.addEventListener('submit',(ev)=>{
+      ev.preventDefault();
+      const text=cform.querySelector('input').value.trim(); if(!text) return;
+      p.comments=p.comments||[];
+      p.comments.push({id:genId(),author:SESSION.userId,text,created:Date.now()});
+      saveDB(DB); renderBlog();
+    });
+    post.appendChild(comments); post.appendChild(cform); listArea.appendChild(post);
+  });
+}
+
+function openProfile(){
+  const area=$('#content-area'); area.innerHTML='';
+  area.appendChild(document.getElementById('profile-template').content.cloneNode(true));
+  const user=byId(SESSION.userId,DB.users);
+  $('#profile-name').value=user.name;
+  $('#profile-email').value=user.email;
+  $('#profile-institution').value=user.institution||'';
+  $('#save-profile').addEventListener('click',()=>{
+    user.name=$('#profile-name').value.trim();
+    user.institution=$('#profile-institution').value.trim();
+    saveDB(DB); alert('Perfil guardado'); renderDashboard();
+  });
+}
+
+function escapeHtml(str=''){
+  return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+</script>
+</body>
+</html>
