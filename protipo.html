@@ -1,423 +1,712 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>LeFodigital - Prototipo Educativo</title>
-<meta name="description" content="Prototipo web educativo con roles: Estudiante y Profesor.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width='100' height='100' rx='20' fill='%233a6b9e'/><text x='50' y='58' font-size='50' text-anchor='middle' fill='white' font-family='Arial'>E</text></svg>">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>LeFodigital</title>
+<meta name="description" content="Plataforma educativa LeFodigital — Aprender es crecer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width='100' height='100' rx='22' fill='%232f5a86'/><text x='50' y='63' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'>L</text></svg>">
 <style>
-  :root{
-    --blue:#3a6b9e;
-    --bg:#f5f7fb;
-    --card:#ffffff;
-    --muted:#666;
-    --accent:#2f5a86;
-    --success:#2e8b57;
-    --danger:#c53d3d;
-    --radius:12px;
-    --fw-heading:600;
-    --fw-regular:400;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;
-    font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-    background:linear-gradient(180deg,var(--bg),white);
-    color:#111;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.45;
-    padding-bottom:80px;
-  }
+:root{
+  --blue:#3a6b9e;
+  --bg:#f0f4fb;
+  --card:#ffffff;
+  --muted:#6b7a90;
+  --accent:#2f5a86;
+  --accent2:#1e3f60;
+  --success:#1e8a5e;
+  --danger:#c53d3d;
+  --warn:#d97706;
+  --radius:14px;
+  --shadow:0 4px 20px rgba(18,35,57,0.08);
+  --shadow-lg:0 10px 40px rgba(18,35,57,0.14);
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:#0f1b2d;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+  padding-bottom:88px;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(58,107,158,0.1),transparent);
+}
 
-  .wrap{max-width:1100px;margin:28px auto;padding:18px}
+/* ── Layout ── */
+.wrap{max-width:1140px;margin:0 auto;padding:20px 18px}
 
-  header.appbar{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:12px;padding:12px 18px;background:var(--card);border-radius:12px;
-    box-shadow:0 6px 18px rgba(18,35,57,0.06);
-  }
-  .logo{display:flex;gap:12px;align-items:center}
-  .logo .mark{
-    width:48px;height:48px;border-radius:10px;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:20px;
-  }
-  .app-title{font-weight:var(--fw-heading);font-size:18px}
-  .slogan{font-size:13px;color:var(--muted)}
+/* ── Appbar ── */
+header.appbar{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:10px 16px;background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(12px);border-radius:16px;
+  box-shadow:0 2px 16px rgba(18,35,57,0.07);
+  border:1px solid rgba(255,255,255,0.9);
+}
+.logo{display:flex;gap:11px;align-items:center}
+.logo .mark{
+  width:44px;height:44px;border-radius:11px;
+  background:linear-gradient(135deg,var(--blue),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-weight:700;font-size:20px;letter-spacing:-0.5px;
+  box-shadow:0 3px 10px rgba(47,90,134,0.35);
+}
+.app-title{font-weight:700;font-size:17px;color:#0f1b2d}
+.slogan{font-size:12px;color:var(--muted)}
+nav.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-  nav.top-actions{display:flex;gap:8px;align-items:center}
-  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-  .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(47,90,134,0.12)}
-  .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(47,90,134,0.08)}
+/* ── Buttons ── */
+.btn{
+  background:var(--accent);color:white;padding:8px 14px;
+  border-radius:10px;border:0;cursor:pointer;font-weight:600;
+  font-family:var(--font);font-size:13px;
+  transition:background .15s, transform .12s, box-shadow .15s;
+}
+.btn:hover{background:var(--accent2);box-shadow:0 3px 10px rgba(47,90,134,0.3)}
+.btn:active{transform:scale(0.97)}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid rgba(47,90,134,0.2)}
+.btn.ghost:hover{background:rgba(47,90,134,0.06)}
+.btn.secondary{background:#fff;color:var(--accent);border:1.5px solid rgba(47,90,134,0.15)}
+.btn.danger{background:var(--danger);color:white}
+.btn.sm{padding:5px 10px;font-size:12px;border-radius:8px}
 
-  .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 20px rgba(18,35,57,0.05)}
-  .auth-grid{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:center}
-  .hero{padding:18px}
-  .hero h1{margin:0 0 8px 0;font-size:20px}
-  .hero p{margin:0;color:var(--muted)}
+/* ── Cards ── */
+.card{
+  background:var(--card);padding:20px;border-radius:var(--radius);
+  box-shadow:var(--shadow);border:1px solid rgba(18,35,57,0.04);
+}
 
-  form{display:grid;gap:10px}
-  label{font-size:13px;color:var(--muted)}
-  input[type="text"],input[type="email"],input[type="password"],select,textarea{
-    width:100%;padding:10px;border-radius:8px;border:1px solid #e3e8ef;background:transparent;font-size:14px;
-  }
-  .small{font-size:13px;color:var(--muted)}
+/* ── Auth ── */
+.auth-grid{display:grid;grid-template-columns:1fr 400px;gap:20px;align-items:center}
+.hero h1{font-size:22px;font-weight:700;margin-bottom:8px}
+.hero p{color:var(--muted)}
+.demo-creds{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.cred-item{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-radius:10px;background:#f7faff;border:1px solid rgba(47,90,134,0.08);
+  font-size:13px;
+}
+.cred-badge{
+  padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;
+  background:var(--accent);color:white;white-space:nowrap;
+}
+form{display:grid;gap:10px}
+label{font-size:12px;color:var(--muted);font-weight:500;margin-bottom:-4px}
+input[type="text"],input[type="email"],input[type="password"],select,textarea{
+  width:100%;padding:10px 12px;border-radius:9px;
+  border:1.5px solid #e0e8f0;background:transparent;
+  font-size:14px;font-family:var(--font);
+  transition:border-color .15s;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+.form-row{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:4px}
+.small{font-size:12px;color:var(--muted)}
 
-  .grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:18px}
-  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+/* ── Dashboard ── */
+.grid{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:18px}
+.modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
 
-  /* ── Module cards ── */
-  .module{
-    padding:14px;border-radius:12px;
-    background:linear-gradient(180deg,white,#fafcff);
-    display:flex;gap:12px;align-items:center;
-    border:1px solid rgba(18,35,57,0.06);
-    cursor:pointer;
-    transition:box-shadow .18s, transform .18s;
-  }
-  .module:hover{box-shadow:0 8px 24px rgba(47,90,134,0.13);transform:translateY(-2px);}
-  .module:focus{outline:2px solid var(--accent);outline-offset:2px;}
+/* ── Module cards ── */
+.module{
+  padding:14px 16px;border-radius:12px;
+  background:white;
+  display:flex;gap:13px;align-items:center;
+  border:1px solid rgba(18,35,57,0.06);
+  cursor:pointer;
+  transition:box-shadow .2s, transform .2s, border-color .2s;
+}
+.module:hover{box-shadow:0 8px 28px rgba(47,90,134,0.14);transform:translateY(-3px);border-color:rgba(47,90,134,0.15)}
+.module:focus{outline:2.5px solid var(--accent);outline-offset:2px}
+.module.full-w{grid-column:1/-1}
+.mod-icon{
+  flex-shrink:0;width:46px;height:46px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+}
+.mod-icon svg{width:24px;height:24px}
+.mod-icon.act {background:#e8f2ff}
+.mod-icon.cur {background:#e6f7ee}
+.mod-icon.sim {background:#f2edff}
+.mod-icon.bib {background:#fff7e0}
+.mod-icon.blog{background:#fff0f0}
+.mod-icon.info{background:#e0f7fa}
+.mod-icon.rep {background:#fff4e8}
+.module h3{margin:0;font-size:14px;font-weight:600}
+.module p{margin:2px 0 0;font-size:12px;color:var(--muted);line-height:1.4}
 
-  /* Icon wrapper */
-  .mod-icon{
-    flex-shrink:0;
-    width:48px;height:48px;border-radius:10px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .mod-icon svg{width:26px;height:26px;}
+/* ── Dashboard header ── */
+.dash-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
+.dash-header h2{font-size:20px;font-weight:700}
+.role-pill{
+  padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;
+  background:rgba(47,90,134,0.1);color:var(--accent);
+}
 
-  /* Per-module color themes */
-  .mod-icon.act  { background:#e8f3ff; }
-  .mod-icon.cur  { background:#edf7ed; }
-  .mod-icon.sim  { background:#f3eeff; }
-  .mod-icon.bib  { background:#fff8e6; }
-  .mod-icon.blog { background:#fff0f0; }
-  .mod-icon.info { background:#e6fbfb; }
+/* ── Sidebar ── */
+.sidebar{display:flex;flex-direction:column;gap:14px}
+.profile-mini{display:flex;gap:12px;align-items:center}
+.avatar{
+  width:56px;height:56px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:22px;font-weight:700;
+}
+.profile-info{flex:1;min-width:0}
+.profile-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profile-role{font-size:12px;color:var(--muted)}
 
-  .module h3{margin:0;font-size:15px}
-  .module p{margin:0;font-size:13px;color:var(--muted)}
+/* ── Progress bar ── */
+.progress-wrap{margin-top:8px}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.progress{height:8px;background:#e4ecf7;border-radius:999px;overflow:hidden}
+.progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#5b9bdc);border-radius:999px;transition:width .6s cubic-bezier(.4,0,.2,1)}
 
-  .sidebar .card-block{display:flex;flex-direction:column;gap:12px}
-  .profile-mini{display:flex;gap:12px;align-items:center}
-  .avatar{width:64px;height:64px;border-radius:10px;background:linear-gradient(45deg,var(--blue),var(--accent));display:flex;align-items:center;justify-content:center;color:white;font-size:22px;font-weight:700}
-  .progress{height:10px;background:#e9eef7;border-radius:999px;overflow:hidden}
-  .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--blue))}
+/* ── Points / Level ── */
+.pts-level{display:flex;gap:10px;margin-top:8px}
+.pts-chip{
+  flex:1;text-align:center;padding:8px 6px;border-radius:10px;
+  background:#f4f7fc;border:1px solid rgba(47,90,134,0.06);
+}
+.pts-chip .val{font-size:18px;font-weight:700;color:var(--accent)}
+.pts-chip .lbl{font-size:10px;color:var(--muted);font-weight:500}
 
-  .list{display:flex;flex-direction:column;gap:10px}
-  .list .item{padding:12px;background:#fff;border-radius:10px;border:1px solid rgba(18,35,57,0.04);display:flex;justify-content:space-between;gap:12px;align-items:center}
-  .meta{font-size:13px;color:var(--muted)}
+/* ── Medals ── */
+.medals-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.medal{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600;
+  border:1.5px solid transparent;cursor:default;
+  transition:transform .15s;
+  position:relative;
+}
+.medal:hover{transform:scale(1.08)}
+.medal.earned{background:linear-gradient(135deg,#fff8e0,#fff3c0);border-color:#f5c518;color:#7a5900}
+.medal.locked{background:#f4f6f9;border-color:#e0e6ef;color:#aab;filter:grayscale(.6);opacity:.55}
+.medal-icon{font-size:14px}
+.medal-name{font-size:10px}
 
-  .blog-list .post{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(18,35,57,0.04)}
-  .post h4{margin:0 0 6px 0}
-  .post p{margin:0;color:var(--muted)}
+/* ── List items ── */
+.list{display:flex;flex-direction:column;gap:8px}
+.list .item{
+  padding:12px 14px;background:#fff;border-radius:10px;
+  border:1px solid rgba(18,35,57,0.05);
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+}
+.meta{font-size:12px;color:var(--muted)}
 
-  footer.sitefoot{position:fixed;left:0;right:0;bottom:0;background:var(--card);padding:10px 18px;border-top:1px solid rgba(18,35,57,0.03);display:flex;justify-content:center}
-  footer .inner{max-width:1100px;width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px}
-  footer .left{font-size:13px}
-  footer .right{display:flex;gap:12px}
+/* ── News ── */
+.news-item{
+  padding:9px 12px;border-radius:9px;
+  background:#f7faff;border-left:3px solid var(--accent);
+  font-size:13px;color:#234;
+}
 
-  .a11y-controls{display:flex;gap:8px;align-items:center}
-  .badge{display:inline-block;padding:6px 8px;border-radius:8px;background:rgba(58,107,158,0.08);font-size:13px;color:var(--muted)}
+/* ── Badge/pill ── */
+.badge{display:inline-block;padding:4px 9px;border-radius:8px;background:rgba(47,90,134,0.08);font-size:12px;color:var(--muted)}
 
-  .muted{color:var(--muted)}
-  .text-right{text-align:right}
-  .hidden{display:none}
-  .kicker{font-size:12px;color:var(--muted);margin-bottom:6px}
-  .mt{margin-top:10px}
-  .mb{margin-bottom:10px}
+/* ── Report ── */
+.report-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.stat-card{padding:14px;border-radius:11px;background:#f7faff;border:1px solid rgba(47,90,134,0.07);text-align:center}
+.stat-val{font-size:26px;font-weight:700;color:var(--accent);line-height:1}
+.stat-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+.all-medals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-top:10px}
+.medal-card{
+  padding:12px;border-radius:10px;text-align:center;
+  border:1.5px solid transparent;
+}
+.medal-card.earned{background:linear-gradient(135deg,#fff9e6,#fffbe8);border-color:#f5c518}
+.medal-card.locked{background:#f6f7f9;border-color:#e5e9ef;opacity:.6}
+.medal-card .m-icon{font-size:26px;margin-bottom:4px}
+.medal-card .m-name{font-size:12px;font-weight:600}
+.medal-card .m-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.teacher-student-row{
+  padding:12px 14px;border-radius:10px;background:#f7faff;
+  border:1px solid rgba(47,90,134,0.07);
+}
+.teacher-student-row h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.mini-progress{height:6px;background:#dde4f0;border-radius:999px;overflow:hidden;margin-top:6px}
+.mini-progress>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#5b9bdc)}
 
-  @media(max-width:900px){
-    .auth-grid{grid-template-columns:1fr}
-    .grid{grid-template-columns:1fr}
-    .cards{grid-template-columns:1fr}
-  }
+/* ── Evidence ── */
+.evidence-section{
+  margin-top:10px;padding-top:10px;
+  border-top:1px dashed #e0e8f0;
+}
+.evidence-section label{font-size:12px;color:var(--muted);font-weight:500}
+.evidence-upload-row{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.file-label{
+  padding:6px 12px;border-radius:8px;border:1.5px dashed rgba(47,90,134,0.3);
+  font-size:12px;color:var(--accent);cursor:pointer;
+  transition:background .15s;
+  display:inline-flex;align-items:center;gap:5px;
+}
+.file-label:hover{background:rgba(47,90,134,0.06)}
+.file-name-display{font-size:12px;color:var(--muted)}
+.evidence-link{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:12px;color:var(--accent);text-decoration:none;
+  padding:4px 8px;border-radius:6px;background:rgba(47,90,134,0.08);
+}
+.evidence-link:hover{background:rgba(47,90,134,0.15)}
+
+/* ── Blog ── */
+.blog-list .post{
+  padding:14px;border-radius:12px;background:#fff;
+  border:1px solid rgba(18,35,57,0.05);
+}
+.post h4{font-size:15px;font-weight:600;margin-bottom:4px}
+.post-content{color:var(--muted);font-size:13px;margin-top:6px;line-height:1.6}
+.comment-item{padding:8px 12px;background:#f7faff;border-radius:8px;margin-top:6px}
+
+/* ── Teacher controls ── */
+.teacher-panel{display:flex;flex-direction:column;gap:8px}
+
+/* ── Chatbot FAB ── */
+.chat-fab{
+  position:fixed;bottom:80px;right:22px;
+  display:flex;align-items:center;gap:10px;
+  padding:0 20px 0 14px;height:52px;
+  border-radius:999px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#10a37f,#1a7f64);
+  color:white;
+  box-shadow:0 6px 24px rgba(16,163,127,0.45), 0 2px 8px rgba(0,0,0,0.15);
+  z-index:1000;
+  transition:transform .2s cubic-bezier(.4,0,.2,1), box-shadow .2s;
+  font-family:var(--font);
+}
+.chat-fab:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 10px 32px rgba(16,163,127,0.5), 0 4px 12px rgba(0,0,0,0.15);
+}
+.chat-fab:active{transform:translateY(-1px) scale(.99)}
+.chat-fab-icon{
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;flex-shrink:0;
+}
+.chat-fab-text{display:flex;flex-direction:column;line-height:1.2}
+.chat-fab-label{font-size:13px;font-weight:700;letter-spacing:.1px}
+.chat-fab-sub{font-size:10px;opacity:.8;font-weight:400}
+/* Pulse ring */
+.chat-fab::before{
+  content:'';
+  position:absolute;inset:-4px;border-radius:999px;
+  background:transparent;
+  border:2px solid rgba(16,163,127,0.4);
+  animation:fabPulse 2.5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes fabPulse{
+  0%,100%{transform:scale(1);opacity:.6}
+  50%{transform:scale(1.08);opacity:0}
+}
+.chat-fab.open::before{animation:none}
+.chat-panel{
+  position:fixed;bottom:144px;right:22px;
+  width:340px;height:480px;
+  background:#fff;border-radius:18px;
+  box-shadow:0 16px 50px rgba(18,35,57,0.2);
+  display:flex;flex-direction:column;overflow:hidden;
+  z-index:999;
+  transform:scale(.9) translateY(16px);
+  opacity:0;pointer-events:none;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  border:1px solid rgba(47,90,134,0.1);
+}
+.chat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-head{
+  background:linear-gradient(135deg,#10a37f,#1a7f64);
+  color:white;padding:13px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.chat-head-info{display:flex;align-items:center;gap:9px}
+.chat-bot-avatar{
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.chat-head h4{font-size:14px;font-weight:600;margin:0}
+.chat-head span{font-size:11px;opacity:.8}
+.chat-close{background:transparent;border:none;color:white;cursor:pointer;font-size:18px;opacity:.8;line-height:1}
+.chat-close:hover{opacity:1}
+.chat-messages{
+  flex:1;overflow-y:auto;padding:12px;
+  display:flex;flex-direction:column;gap:8px;
+  scroll-behavior:smooth;
+}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb{background:#dde4f0;border-radius:2px}
+.msg{max-width:85%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5;word-break:break-word}
+.msg.user{background:var(--accent);color:white;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.ai{background:#f0f4f9;color:#0f1b2d;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.thinking{background:#f0f4f9;color:var(--muted);align-self:flex-start;font-style:italic}
+.chat-input-area{
+  padding:10px 12px;border-top:1px solid #edf0f5;
+  display:flex;gap:8px;align-items:center;
+}
+.chat-input-area input{
+  flex:1;padding:8px 12px;border-radius:20px;
+  border:1.5px solid #e0e8f0;font-size:13px;
+  font-family:var(--font);outline:none;
+}
+.chat-input-area input:focus{border-color:var(--accent)}
+.chat-send{
+  width:34px;height:34px;border-radius:50%;
+  background:#10a37f;color:white;border:none;
+  cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .15s;
+}
+.chat-send:hover{background:#1a7f64}
+.chat-send:disabled{background:#bcc;cursor:not-allowed}
+.apikey-screen{padding:16px;display:flex;flex-direction:column;gap:12px;flex:1}
+.apikey-screen p{font-size:13px;color:var(--muted);line-height:1.6}
+.apikey-screen input{
+  padding:9px 12px;border-radius:9px;border:1.5px solid #e0e8f0;
+  font-size:13px;font-family:monospace;width:100%;
+}
+.apikey-screen input:focus{outline:none;border-color:var(--accent)}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:90px;left:50%;
+  transform:translateX(-50%) translateY(12px);
+  background:#1e2d40;color:white;padding:10px 18px;
+  border-radius:24px;font-size:13px;font-weight:500;
+  opacity:0;z-index:9999;pointer-events:none;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  white-space:nowrap;box-shadow:0 6px 20px rgba(18,35,57,0.3);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Footer ── */
+footer.sitefoot{
+  position:fixed;left:0;right:0;bottom:0;
+  background:rgba(255,255,255,0.9);backdrop-filter:blur(10px);
+  padding:10px 20px;border-top:1px solid rgba(18,35,57,0.05);
+  display:flex;justify-content:center;z-index:100;
+}
+footer .inner{max-width:1140px;width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+footer .left{font-size:12px;color:var(--muted)}
+footer .right{display:flex;gap:14px}
+footer a{font-size:12px;color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--accent)}
+
+/* ── A11y controls ── */
+.a11y-controls{display:flex;gap:6px;align-items:center}
+
+/* ── Helpers ── */
+.muted{color:var(--muted)}
+.hidden{display:none}
+.kicker{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.mt{margin-top:10px}
+.mt2{margin-top:16px}
+.divider{height:1px;background:#edf0f5;margin:12px 0}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .auth-grid,.grid{grid-template-columns:1fr}
+  .modules-grid{grid-template-columns:1fr}
+  .module.full-w{grid-column:1}
+  .chat-panel{width:calc(100vw - 32px);right:16px}
+}
+@media(max-width:560px){
+  .a11y-controls .btn.ghost:nth-child(1){display:none}
+}
+/* ── Export buttons ── */
+.export-bar{
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  padding:12px 14px;background:#f7faff;
+  border-radius:11px;border:1px solid rgba(47,90,134,0.08);
+  margin-top:14px;
+}
+.export-bar span{font-size:12px;color:var(--muted);font-weight:500;flex:1}
+.btn.pdf{background:#e53e3e;color:white}
+.btn.pdf:hover{background:#c53030}
+.btn.excel{background:#1e8a5e;color:white}
+.btn.excel:hover{background:#166f4c}
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
+
 <div class="wrap" id="app">
-  <header class="appbar card" role="banner" aria-label="Barra superior">
+  <!-- ── APPBAR ── -->
+  <header class="appbar" role="banner">
     <div class="logo">
-      <div class="mark" aria-hidden="true">E</div>
+      <div class="mark">L</div>
       <div>
         <div class="app-title">LeFodigital</div>
         <div class="slogan">La educación que evoluciona contigo</div>
       </div>
     </div>
-
-    <nav class="top-actions" aria-label="Acciones de la aplicación">
+    <nav class="top-actions">
       <div class="a11y-controls">
-        <button class="btn ghost" id="toggle-contrast" title="Alternar alto contraste">Alto contraste</button>
-        <button class="btn ghost" id="increase-text" title="Aumentar tamaño de texto">A+</button>
-        <button class="btn ghost" id="decrease-text" title="Disminuir tamaño de texto">A-</button>
+        <button class="btn ghost sm" id="toggle-contrast">⊙ Contraste</button>
+        <button class="btn ghost sm" id="increase-text">A+</button>
+        <button class="btn ghost sm" id="decrease-text">A−</button>
       </div>
       <div id="auth-area"></div>
     </nav>
   </header>
 
   <main id="main-view" class="mt">
-    <!-- AUTH SCREEN -->
+    <!-- ── AUTH ── -->
     <section id="auth-screen" class="card" aria-live="polite">
       <div class="auth-grid">
-        <div class="hero">
+        <div class="hero" style="padding:10px 20px">
+          <div style="font-size:11px;font-weight:600;color:var(--accent);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">Plataforma Educativa</div>
           <h1>Bienvenido a LeFodigital</h1>
-          <p>Regístrate o inicia sesión para acceder a tus cursos, actividades y simulaciones.</p>
-          <div class="kicker mt">Cuenta de demostración</div>
-          <div class="list">
-            <div class="item"><strong>Profesor:</strong> prof@demo.com / prof123</div>
-            <div class="item"><strong>Estudiante:</strong> est@demo.com / est123</div>
+          <p style="margin-top:8px">Regístrate o inicia sesión para acceder a cursos, actividades, simulaciones y más.</p>
+          <div class="kicker mt2">Cuentas de demostración</div>
+          <div class="demo-creds">
+            <div class="cred-item"><span class="cred-badge">Profesor</span><span>prof@demo.com &nbsp;/&nbsp; prof123</span></div>
+            <div class="cred-item"><span class="cred-badge" style="background:#1e8a5e">Estudiante</span><span>est@demo.com &nbsp;/&nbsp; est123</span></div>
           </div>
         </div>
-
-        <div>
-          <div class="card-block card">
-            <div id="forms-area">
-              <form id="login-form" aria-label="Formulario de inicio de sesión">
-                <label for="login-email">Correo</label>
-                <input id="login-email" type="email" placeholder="tu@correo.com" required />
-                <label for="login-pass">Contraseña</label>
-                <input id="login-pass" type="password" placeholder="Contraseña" required />
-                <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px">
-                  <button type="submit" class="btn">Iniciar sesión</button>
-                  <button type="button" class="btn ghost" id="show-register">Crear cuenta</button>
-                </div>
-                <div class="small mt">¿Olvidaste tu contraseña? (demo)</div>
-              </form>
-
-              <form id="register-form" class="hidden" aria-label="Formulario de registro">
-                <label for="reg-name">Nombre completo</label>
-                <input id="reg-name" type="text" placeholder="Tu nombre" required />
-                <label for="reg-email">Correo electrónico</label>
-                <input id="reg-email" type="email" placeholder="tu@proveedor.com" required />
-                <label for="reg-pass">Contraseña</label>
-                <input id="reg-pass" type="password" placeholder="Crear contraseña" required />
-                <label for="reg-role">Tipo de usuario</label>
-                <select id="reg-role" required>
-                  <option value="">Selecciona...</option>
-                  <option value="estudiante">Estudiante</option>
-                  <option value="profesor">Profesor</option>
-                </select>
-                <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:6px">
-                  <button type="submit" class="btn">Registrar</button>
-                  <button type="button" class="btn ghost" id="show-login">Volver a iniciar</button>
-                </div>
-                <div class="small mt">Al registrarte aceptas los términos de uso (prototipo).</div>
-              </form>
-            </div>
+        <div class="card" style="padding:22px">
+          <div id="forms-area">
+            <form id="login-form">
+              <div style="font-weight:700;font-size:16px;margin-bottom:6px">Iniciar sesión</div>
+              <label>Correo electrónico</label>
+              <input id="login-email" type="email" placeholder="tu@correo.com" required/>
+              <label>Contraseña</label>
+              <input id="login-pass" type="password" placeholder="••••••••" required/>
+              <div class="form-row" style="margin-top:8px">
+                <button type="submit" class="btn">Entrar →</button>
+                <button type="button" class="btn ghost" id="show-register">Crear cuenta</button>
+              </div>
+            </form>
+            <form id="register-form" class="hidden">
+              <div style="font-weight:700;font-size:16px;margin-bottom:6px">Crear cuenta</div>
+              <label>Nombre completo</label>
+              <input id="reg-name" type="text" placeholder="Tu nombre" required/>
+              <label>Correo electrónico</label>
+              <input id="reg-email" type="email" placeholder="tu@correo.com" required/>
+              <label>Contraseña</label>
+              <input id="reg-pass" type="password" placeholder="Elige una contraseña" required/>
+              <label>Rol</label>
+              <select id="reg-role" required>
+                <option value="">Selecciona tu rol...</option>
+                <option value="estudiante">Estudiante</option>
+                <option value="profesor">Profesor</option>
+              </select>
+              <div class="form-row" style="margin-top:8px">
+                <button type="submit" class="btn">Registrarme</button>
+                <button type="button" class="btn ghost" id="show-login">Ya tengo cuenta</button>
+              </div>
+              <div class="small mt">Al registrarte aceptas los términos de uso (prototipo demo).</div>
+            </form>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DASHBOARD -->
+    <!-- ── DASHBOARD ── -->
     <section id="dashboard-screen" class="hidden" aria-live="polite">
       <div class="grid">
+        <!-- Main -->
         <div>
           <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="dash-header">
               <div>
-                <h2 id="dash-title">Hola, usuario</h2>
-                <p class="muted" id="dash-sub">Bienvenido a tu panel</p>
+                <h2 id="dash-title">Hola,</h2>
+                <p class="muted" id="dash-sub" style="font-size:13px;margin-top:2px"></p>
               </div>
-              <div class="badge" id="role-badge">Estudiante</div>
+              <div class="role-pill" id="role-badge"></div>
             </div>
-
-            <div class="mt">
-              <div class="kicker">Eslóganes</div>
-              <div style="display:flex;gap:10px;flex-wrap:wrap">
-                <div class="badge">Aprender es crecer</div>
-                <div class="badge">La educación que evoluciona contigo</div>
-                <div class="badge">Tu crecimiento, nuestra misión</div>
-              </div>
+            <div class="mt" style="display:flex;gap:8px;flex-wrap:wrap">
+              <span class="badge">📖 Aprender es crecer</span>
+              <span class="badge">🚀 La educación que evoluciona contigo</span>
+              <span class="badge">🎯 Tu crecimiento, nuestra misión</span>
             </div>
+            <div class="mt2">
+              <div class="kicker">Módulos disponibles</div>
+              <div class="modules-grid mt">
 
-            <div class="mt">
-              <h3>Módulos disponibles</h3>
-              <div class="cards mt" id="modules">
-
-                <!-- Actividades -->
                 <div class="module" data-module="actividades" role="button" tabindex="0">
-                  <div class="mod-icon act" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="5" y="2" width="14" height="20" rx="2" stroke="#3a6b9e" stroke-width="1.8" fill="none"/>
-                      <path d="M9 7h6M9 11h6M9 15h4" stroke="#3a6b9e" stroke-width="1.8" stroke-linecap="round"/>
-                      <circle cx="7" cy="7" r="1" fill="#3a6b9e"/>
-                      <circle cx="7" cy="11" r="1" fill="#3a6b9e"/>
-                      <path d="M7 15.5l.8.8 1.6-1.6" stroke="#3a6b9e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                  <div class="mod-icon act">
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#3a6b9e" stroke-width="1.8"/><path d="M9 7h6M9 11h6M9 15h4" stroke="#3a6b9e" stroke-width="1.8" stroke-linecap="round"/><circle cx="7" cy="7" r="1" fill="#3a6b9e"/><circle cx="7" cy="11" r="1" fill="#3a6b9e"/><path d="M7 15.5l.8.8 1.6-1.6" stroke="#3a6b9e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </div>
-                  <div>
-                    <h3>Actividades</h3>
-                    <p>Ver actividades asignadas y completar tareas</p>
-                  </div>
+                  <div><h3>Actividades</h3><p>Ver actividades asignadas y completar tareas</p></div>
                 </div>
 
-                <!-- Cursos -->
                 <div class="module" data-module="cursos" role="button" tabindex="0">
-                  <div class="mod-icon cur" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#2e8b57" stroke-width="1.8" stroke-linecap="round"/>
-                      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#2e8b57" stroke-width="1.8" fill="none"/>
-                      <path d="M9 7h7M9 11h5" stroke="#2e8b57" stroke-width="1.8" stroke-linecap="round"/>
-                    </svg>
+                  <div class="mod-icon cur">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#1e8a5e" stroke-width="1.8" stroke-linecap="round"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#1e8a5e" stroke-width="1.8"/><path d="M9 7h7M9 11h5" stroke="#1e8a5e" stroke-width="1.8" stroke-linecap="round"/></svg>
                   </div>
-                  <div>
-                    <h3>Cursos</h3>
-                    <p>Explorar y gestionar los cursos</p>
-                  </div>
+                  <div><h3>Cursos</h3><p>Explorar y gestionar los cursos disponibles</p></div>
                 </div>
 
-                <!-- Simulaciones -->
                 <div class="module" data-module="simulaciones" role="button" tabindex="0">
-                  <div class="mod-icon sim" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M9 3h6v8l3.5 7a1 1 0 0 1-.93 1.4H6.43a1 1 0 0 1-.93-1.4L9 11V3z" stroke="#7c3aed" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                      <path d="M9 3H7M15 3h2" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"/>
-                      <circle cx="11.5" cy="16" r="1" fill="#7c3aed"/>
-                      <circle cx="14" cy="13.5" r="0.8" fill="#a78bfa"/>
-                    </svg>
+                  <div class="mod-icon sim">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M9 3h6v8l3.5 7a1 1 0 0 1-.93 1.4H6.43a1 1 0 0 1-.93-1.4L9 11V3z" stroke="#7c3aed" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 3H7M15 3h2" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"/><circle cx="11.5" cy="16" r="1" fill="#7c3aed"/><circle cx="14" cy="13.5" r=".8" fill="#a78bfa"/></svg>
                   </div>
-                  <div>
-                    <h3>Simulaciones</h3>
-                    <p>Acceder a simulaciones interactivas externas</p>
-                  </div>
+                  <div><h3>Simulaciones</h3><p>Acceder a simulaciones interactivas externas</p></div>
                 </div>
 
-                <!-- Biblioteca -->
                 <div class="module" data-module="biblioteca" role="button" tabindex="0">
-                  <div class="mod-icon bib" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="3" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8" fill="none"/>
-                      <rect x="9" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8" fill="none"/>
-                      <path d="M15 5l4 1.5v15l-4-1.5V5z" stroke="#d97706" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                    </svg>
+                  <div class="mod-icon bib">
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8"/><rect x="9" y="4" width="4" height="16" rx="1" stroke="#d97706" stroke-width="1.8"/><path d="M15 5l4 1.5v15l-4-1.5V5z" stroke="#d97706" stroke-width="1.8" stroke-linejoin="round"/></svg>
                   </div>
-                  <div>
-                    <h3>Biblioteca</h3>
-                    <p>Enlaces a recursos online</p>
-                  </div>
+                  <div><h3>Biblioteca</h3><p>Recursos y material académico online</p></div>
                 </div>
 
-                <!-- Blog -->
                 <div class="module" data-module="blog" role="button" tabindex="0">
-                  <div class="mod-icon blog" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 20h9" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/>
-                      <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#dc2626" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
-                    </svg>
+                  <div class="mod-icon blog">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 20h9" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z" stroke="#dc2626" stroke-width="1.8" stroke-linejoin="round"/></svg>
                   </div>
-                  <div>
-                    <h3>Blog</h3>
-                    <p>Publicar artículos y comentar</p>
-                  </div>
+                  <div><h3>Blog</h3><p>Publicar artículos y comentar publicaciones</p></div>
                 </div>
 
-                <!-- Sobre nosotros -->
                 <div class="module" data-module="sobre" role="button" tabindex="0">
-                  <div class="mod-icon info" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="12" cy="12" r="9" stroke="#0891b2" stroke-width="1.8" fill="none"/>
-                      <path d="M12 11v6" stroke="#0891b2" stroke-width="2" stroke-linecap="round"/>
-                      <circle cx="12" cy="7.5" r="1.2" fill="#0891b2"/>
-                    </svg>
+                  <div class="mod-icon info">
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#0891b2" stroke-width="1.8"/><path d="M12 11v6" stroke="#0891b2" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.2" fill="#0891b2"/></svg>
                   </div>
-                  <div>
-                    <h3>Sobre nosotros</h3>
-                    <p>Información del sistema y contacto</p>
+                  <div><h3>Sobre nosotros</h3><p>Información del sistema y contacto</p></div>
+                </div>
+
+                <!-- REPORTE — full width -->
+                <div class="module full-w" data-module="reporte" role="button" tabindex="0">
+                  <div class="mod-icon rep">
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="#d97706" stroke-width="1.8"/><path d="M8 17v-5M12 17v-8M16 17v-3" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"/></svg>
                   </div>
+                  <div><h3>📊 Mi Reporte / Reportes</h3><p>Estadísticas de progreso, medallas obtenidas y historial completo de actividades</p></div>
                 </div>
 
               </div>
             </div>
           </div>
-
-          <div id="content-area" class="mt"></div>
+          <div id="content-area" class="mt2"></div>
         </div>
 
         <!-- Sidebar -->
         <aside class="sidebar">
-          <div class="card card-block">
+          <!-- Profile card -->
+          <div class="card">
             <div class="profile-mini">
               <div class="avatar" id="mini-avatar">U</div>
-              <div>
-                <div id="mini-name">Nombre</div>
-                <div class="meta" id="mini-role">Rol</div>
-                <div style="margin-top:8px">
-                  <div class="muted">Progreso</div>
-                  <div class="progress mt" aria-hidden="true"><i id="progress-bar" style="width:20%"></i></div>
-                </div>
+              <div class="profile-info">
+                <div class="profile-name" id="mini-name">Nombre</div>
+                <div class="profile-role" id="mini-role">Rol</div>
               </div>
             </div>
-
-            <div class="mt">
-              <div class="kicker">Puntos y Niveles</div>
-              <div id="points">Puntos: 0</div>
-              <div id="level">Nivel: 1</div>
-              <div class="mt">
-                <button class="btn" id="btn-profile">Ver perfil</button>
-                <button class="btn ghost" id="btn-logout">Cerrar sesión</button>
+            <div class="pts-level">
+              <div class="pts-chip">
+                <div class="val" id="pts-val">0</div>
+                <div class="lbl">Puntos</div>
               </div>
+              <div class="pts-chip">
+                <div class="val" id="lvl-val">1</div>
+                <div class="lbl">Nivel</div>
+              </div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-label">
+                <span>Progreso al siguiente nivel</span>
+                <span id="progress-text">0/100</span>
+              </div>
+              <div class="progress"><i id="progress-bar" style="width:0%"></i></div>
+            </div>
+            <div class="divider"></div>
+            <div class="kicker">Mis medallas</div>
+            <div class="medals-row" id="sidebar-medals"></div>
+            <div class="mt" style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn sm" id="btn-profile">Ver perfil</button>
+              <button class="btn ghost sm" id="btn-logout">Cerrar sesión</button>
             </div>
           </div>
 
-          <div class="card mt">
+          <!-- Novedades -->
+          <div class="card">
             <div class="kicker">Novedades</div>
-            <div class="list" id="news-list">
-              <div class="item">Bienvenido a LeFodigital — Protótipo</div>
-              <div class="item">Recuerda completar tus actividades</div>
+            <div style="display:flex;flex-direction:column;gap:7px;margin-top:6px">
+              <div class="news-item">👋 Bienvenido a LeFodigital</div>
+              <div class="news-item">✅ Completa actividades y gana puntos</div>
+              <div class="news-item">🤖 ¡Prueba LeFoBot con ChatGPT en la esquina!</div>
             </div>
           </div>
 
-          <div class="card mt" id="teacher-controls" style="display:none">
+          <!-- Teacher panel -->
+          <div class="card" id="teacher-controls" style="display:none">
             <div class="kicker">Panel Profesor</div>
-            <button class="btn" id="btn-create-activity">Crear actividad</button>
-            <button class="btn ghost" id="btn-create-course">Crear curso</button>
+            <div class="teacher-panel mt">
+              <button class="btn" id="btn-create-activity">+ Crear actividad</button>
+              <button class="btn ghost" id="btn-create-course">+ Crear curso</button>
+            </div>
           </div>
         </aside>
       </div>
     </section>
   </main>
 
-  <footer class="sitefoot" role="contentinfo" aria-label="Pie de página">
+  <footer class="sitefoot" role="contentinfo">
     <div class="inner">
-      <div class="left">LeFodigital — Aprender es crecer · contacto: admin@LeFodigital.demo</div>
+      <div class="left">LeFodigital © 2025 — Aprender es crecer · admin@lefodigital.demo</div>
       <div class="right">
-        <a class="muted" href="#" aria-label="Políticas">Política de privacidad</a>
-        <a class="muted" href="#" aria-label="Redes sociales">Twitter</a>
-        <a class="muted" href="#" aria-label="Redes sociales">Facebook</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Twitter</a>
+        <a href="#">Facebook</a>
       </div>
     </div>
   </footer>
 </div>
 
-<!-- Templates -->
+<!-- ── CHATBOT ── -->
+<button class="chat-fab" id="chat-fab" title="Abrir asistente IA">
+  <div class="chat-fab-icon">✦</div>
+  <div class="chat-fab-text">
+    <span class="chat-fab-label">LeFoBot</span>
+    <span class="chat-fab-sub">Asistente IA</span>
+  </div>
+</button>
+<div class="chat-panel" id="chat-panel" role="dialog" aria-label="Asistente educativo">
+  <div class="chat-head">
+    <div class="chat-head-info">
+      <div class="chat-bot-avatar" style="background:rgba(255,255,255,0.2);font-size:15px;font-weight:700">✦</div>
+      <div>
+        <h4>LeFoBot</h4>
+        <span>Powered by ChatGPT · GPT-4o mini</span>
+      </div>
+    </div>
+    <button class="chat-close" id="chat-close">✕</button>
+  </div>
+  <div id="chat-body" style="display:flex;flex-direction:column;flex:1;overflow:hidden"></div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════ TEMPLATES ═══════════ -->
+
 <template id="activities-template">
   <div class="card">
-    <h3>Actividades</h3>
-    <div id="activities-list" class="mt list"></div>
-    <div class="mt">
-      <h4>Historial</h4>
-      <div id="activities-history" class="list mt"></div>
+    <h3 style="font-size:16px;font-weight:700">Actividades</h3>
+    <div id="activities-list" class="list mt"></div>
+    <div class="mt2">
+      <div class="kicker">Historial completadas</div>
+      <div id="activities-history" class="list mt" style="gap:6px"></div>
     </div>
   </div>
 </template>
 
 <template id="create-activity-template">
   <div class="card">
-    <h3>Crear actividad</h3>
-    <form id="create-activity-form">
-      <label>Título</label>
-      <input id="act-title" required />
-      <label>Descripción</label>
-      <textarea id="act-desc" rows="3"></textarea>
-      <label>Puntos</label>
-      <input id="act-points" type="number" min="1" value="10" required />
-      <label>Fecha límite</label>
-      <input id="act-due" type="date" />
-      <label>Curso (opcional)</label>
-      <input id="act-course" />
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn" type="submit">Crear</button>
+    <h3 style="font-size:16px;font-weight:700">Crear actividad</h3>
+    <form id="create-activity-form" style="margin-top:12px">
+      <label>Título</label><input id="act-title" required/>
+      <label>Descripción</label><textarea id="act-desc" rows="3"></textarea>
+      <label>Puntos</label><input id="act-points" type="number" min="1" value="10" required/>
+      <label>Fecha límite</label><input id="act-due" type="date"/>
+      <label>Curso (opcional)</label><input id="act-course"/>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn" type="submit">Crear actividad</button>
       </div>
     </form>
   </div>
@@ -425,20 +714,18 @@
 
 <template id="courses-template">
   <div class="card">
-    <h3>Cursos</h3>
-    <div id="courses-list" class="mt list"></div>
+    <h3 style="font-size:16px;font-weight:700">Cursos</h3>
+    <div id="courses-list" class="list mt"></div>
   </div>
 </template>
 
 <template id="create-course-template">
   <div class="card">
-    <h3>Crear curso</h3>
-    <form id="create-course-form">
-      <label>Nombre del curso</label>
-      <input id="course-name" required />
-      <label>Descripción</label>
-      <textarea id="course-desc" rows="3"></textarea>
-      <div style="display:flex;gap:8px;margin-top:8px">
+    <h3 style="font-size:16px;font-weight:700">Crear curso</h3>
+    <form id="create-course-form" style="margin-top:12px">
+      <label>Nombre del curso</label><input id="course-name" required/>
+      <label>Descripción</label><textarea id="course-desc" rows="3"></textarea>
+      <div style="display:flex;gap:8px;margin-top:10px">
         <button class="btn" type="submit">Crear curso</button>
       </div>
     </form>
@@ -447,407 +734,1108 @@
 
 <template id="simulations-template">
   <div class="card">
-    <h3>Simulaciones</h3>
-    <div class="mt list" id="sim-list">
-      <div class="item"><div><strong>PhET: Movimiento</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://phet.colorado.edu">Abrir</a></div></div>
-      <div class="item"><div><strong>Genially: Laboratorio</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://genial.ly">Abrir</a></div></div>
-      <div class="item"><div><strong>Educaplay: Juegos</strong><div class="meta">Simulación externa</div></div><div><a target="_blank" rel="noopener" href="https://educaplay.com">Abrir</a></div></div>
+    <h3 style="font-size:16px;font-weight:700">Simulaciones interactivas</h3>
+    <div class="list mt">
+      <div class="item"><div><strong>PhET: Simulaciones de Física</strong><div class="meta">Movimiento, energía, electricidad y más</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://phet.colorado.edu/es/">Abrir →</a></div>
+      <div class="item"><div><strong>Genially: Laboratorio virtual</strong><div class="meta">Contenidos interactivos y gamificados</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://genial.ly">Abrir →</a></div>
+      <div class="item"><div><strong>Educaplay: Juegos educativos</strong><div class="meta">Actividades y juegos para aprender</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://educaplay.com">Abrir →</a></div>
+      <div class="item"><div><strong>GeoGebra: Matemáticas</strong><div class="meta">Geometría, álgebra, cálculo</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://www.geogebra.org">Abrir →</a></div>
     </div>
   </div>
 </template>
 
 <template id="biblioteca-template">
   <div class="card">
-    <h3>Biblioteca online</h3>
-    <div class="mt list">
-      <div class="item"><div><strong>Biblioteca Virtual</strong><div class="meta">Enlace de referencia</div></div><div><a target="_blank" rel="noopener" href="https://www.google.com/search?q=biblioteca+online">Abrir</a></div></div>
-      <div class="item"><div><strong>Recursos educativos</strong><div class="meta">Artículos y PDFs</div></div><div><a target="_blank" rel="noopener" href="https://scholar.google.com">Abrir</a></div></div>
+    <h3 style="font-size:16px;font-weight:700">Biblioteca Online</h3>
+    <div class="list mt">
+      <div class="item"><div><strong>Google Scholar</strong><div class="meta">Artículos académicos y papers</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://scholar.google.com">Abrir →</a></div>
+      <div class="item"><div><strong>Khan Academy</strong><div class="meta">Cursos gratuitos de todas las materias</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://es.khanacademy.org">Abrir →</a></div>
+      <div class="item"><div><strong>Biblioteca Nacional de Colombia</strong><div class="meta">Recursos digitales y colecciones</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://bibliotecanacional.gov.co">Abrir →</a></div>
+      <div class="item"><div><strong>OpenStax</strong><div class="meta">Libros de texto universitarios gratuitos</div></div><a class="btn sm" target="_blank" rel="noopener" href="https://openstax.org">Abrir →</a></div>
     </div>
   </div>
 </template>
 
 <template id="blog-template">
   <div class="card">
-    <h3>Blog</h3>
+    <h3 style="font-size:16px;font-weight:700">Blog educativo</h3>
     <div id="blog-create" class="mt"></div>
-    <div id="blog-list" class="mt blog-list"></div>
+    <div id="blog-list" class="mt" style="display:flex;flex-direction:column;gap:12px"></div>
   </div>
 </template>
 
-<template id="blog-create-template">
-  <form id="create-post-form" class="card">
-    <label>Título</label>
-    <input id="post-title" required />
-    <label>Contenido</label>
-    <textarea id="post-content" rows="4" required></textarea>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn" type="submit">Publicar</button>
-    </div>
+<template id="blog-create-tpl">
+  <form id="create-post-form" style="display:grid;gap:10px;padding:14px;background:#f7faff;border-radius:11px;border:1.5px dashed rgba(47,90,134,0.2)">
+    <div style="font-weight:600;font-size:13px">Nueva publicación</div>
+    <label>Título</label><input id="post-title" required/>
+    <label>Contenido</label><textarea id="post-content" rows="4" required></textarea>
+    <div><button class="btn sm" type="submit">Publicar →</button></div>
   </form>
 </template>
 
 <template id="profile-template">
   <div class="card">
-    <h3>Perfil</h3>
-    <label>Nombre</label>
-    <input id="profile-name" />
-    <label>Correo</label>
-    <input id="profile-email" disabled />
-    <label>Institución</label>
-    <input id="profile-institution" />
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn" id="save-profile">Guardar</button>
+    <h3 style="font-size:16px;font-weight:700">Mi Perfil</h3>
+    <div style="display:grid;gap:10px;margin-top:12px">
+      <label>Nombre completo</label><input id="profile-name"/>
+      <label>Correo (no editable)</label><input id="profile-email" disabled/>
+      <label>Institución educativa</label><input id="profile-institution"/>
     </div>
-  </div>
-</template>
-
-<template id="contact-template">
-  <div class="card">
-    <h3>Contactar administración</h3>
-    <form id="contact-form">
-      <label>Asunto</label>
-      <input id="contact-subject" required />
-      <label>Mensaje</label>
-      <textarea id="contact-message" rows="4" required></textarea>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="btn" type="submit">Enviar</button>
-      </div>
-    </form>
+    <div style="margin-top:12px"><button class="btn" id="save-profile">Guardar cambios</button></div>
   </div>
 </template>
 
 <template id="about-template">
   <div class="card">
-    <h3>Sobre nosotros</h3>
-    <p class="muted">LeFodigital es un prototipo educativo diseñado para demostrar funciones clave de una plataforma de aprendizaje: gestión de actividades, cursos, simulaciones y un espacio colaborativo tipo blog. Este prototipo es una maqueta funcional sin backend.</p>
-    <h4 class="mt">Cómo contactarnos</h4>
-    <p class="muted">admin@LeFodigital.demo</p>
+    <h3 style="font-size:16px;font-weight:700">Sobre LeFodigital</h3>
+    <p class="muted mt" style="font-size:14px;line-height:1.7">LeFodigital es una plataforma educativa diseñada para conectar estudiantes y profesores en un entorno digital colaborativo. Gestiona actividades, cursos, simulaciones y más — todo en un solo lugar.</p>
+    <div class="mt2"><div class="kicker">Contacto</div><p style="font-size:14px;margin-top:6px">📧 admin@lefodigital.demo</p></div>
+    <form id="contact-form" style="display:grid;gap:10px;margin-top:14px;padding:14px;background:#f7faff;border-radius:11px">
+      <div style="font-weight:600;font-size:13px">Enviar mensaje</div>
+      <label>Asunto</label><input id="contact-subject" required/>
+      <label>Mensaje</label><textarea id="contact-message" rows="4" required></textarea>
+      <div><button class="btn sm" type="submit">Enviar mensaje</button></div>
+    </form>
+  </div>
+</template>
+
+<template id="report-student-template">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <h3 style="font-size:16px;font-weight:700">📊 Mi Reporte de Progreso</h3>
+    </div>
+    <div class="export-bar">
+      <span>Exportar reporte:</span>
+      <button class="btn sm pdf" id="rpt-export-pdf">📄 Descargar PDF</button>
+      <button class="btn sm excel" id="rpt-export-excel">📊 Descargar Excel</button>
+    </div>
+    <div class="report-stats" id="rpt-stats"></div>
+
+    <div class="mt2">
+      <div class="progress-label">
+        <span style="font-size:13px;font-weight:600">Progreso al nivel siguiente</span>
+        <span class="meta" id="rpt-progress-lbl"></span>
+      </div>
+      <div class="progress" style="height:12px;margin-top:6px"><i id="rpt-progress-bar" style="width:0%"></i></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="kicker">🏅 Mis medallas</div>
+    <div class="all-medals-grid" id="rpt-medals"></div>
+
+    <div class="divider"></div>
+    <div class="kicker">✅ Actividades completadas</div>
+    <div class="list mt" id="rpt-activities" style="gap:6px"></div>
+  </div>
+</template>
+
+<template id="report-teacher-template">
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <h3 style="font-size:16px;font-weight:700">📊 Reporte General de Estudiantes</h3>
+    </div>
+    <p class="muted mt" style="font-size:13px">Vista general del progreso de todos los estudiantes registrados.</p>
+    <div class="export-bar">
+      <span>Exportar reporte:</span>
+      <button class="btn sm pdf" id="rpt-export-pdf">📄 Descargar PDF</button>
+      <button class="btn sm excel" id="rpt-export-excel">📊 Descargar Excel</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px" id="rpt-students"></div>
   </div>
 </template>
 
 <script>
-const DB_KEY = 'LeFodigital_db_v1';
+/* ═══════════════════════════════════════════
+   LeFodigital — v2.0
+   Nuevas funciones: IA chatbot, barra progreso,
+   reporte, medallas, evidencia de archivos
+═══════════════════════════════════════════ */
+
+/* ── DB ── */
+const DB_KEY  = 'LeFodigital_db_v2';
+const AUTH_KEY = 'LeFodigital_sess';
+const AKEY_KEY = 'LeFodigital_akey';
+// Groq API — capa gratuita. Obtén tu key en: https://console.groq.com
+// Reemplaza el valor de abajo con tu key de Groq
+const DEFAULT_API_KEY = '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';
+
 function loadDB(){
   const raw = localStorage.getItem(DB_KEY);
   if(!raw){
-    const initial = { users:[], activities:[], courses:[], posts:[], contact:[] };
-    initial.users.push({id:genId(), name:'Profesor Demo', email:'prof@demo.com', pass:'prof123', role:'profesor', points:0, level:1, avatar:null});
-    initial.users.push({id:genId(), name:'Estudiante Demo', email:'est@demo.com', pass:'est123', role:'estudiante', points:0, level:1, avatar:null});
-    localStorage.setItem(DB_KEY, JSON.stringify(initial));
-    return initial;
+    const db = { users:[], activities:[], courses:[], posts:[], contact:[] };
+    db.users.push({ id:gid(), name:'Profesor Demo', email:'prof@demo.com', pass:'prof123', role:'profesor', points:0, level:1, medals:[], visitedCourses:false, institution:'' });
+    db.users.push({ id:gid(), name:'Estudiante Demo', email:'est@demo.com', pass:'est123', role:'estudiante', points:0, level:1, medals:[], visitedCourses:false, institution:'' });
+    localStorage.setItem(DB_KEY, JSON.stringify(db)); return db;
   }
   try{ return JSON.parse(raw); }catch(e){ return {users:[],activities:[],courses:[],posts:[],contact:[]} }
 }
-function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-function genId(){ return 'id_'+Math.random().toString(36).slice(2,9); }
-function byId(id, arr){ return arr.find(x=>x.id===id) }
-function findUserByEmail(db, email){ return db.users.find(u=>u.email.toLowerCase()===email.toLowerCase()); }
+function saveDB(){ localStorage.setItem(DB_KEY, JSON.stringify(DB)); }
+function gid(){ return 'id_'+Math.random().toString(36).slice(2,9); }
+function byId(id,arr){ return arr.find(x=>x.id===id); }
+function userByEmail(email){ return DB.users.find(u=>u.email.toLowerCase()===email.toLowerCase()); }
 
 let DB = loadDB();
 let SESSION = null;
-const AUTH_KEY = 'LeFodigital_session';
 
-function saveSession(sess){ SESSION=sess; localStorage.setItem(AUTH_KEY, JSON.stringify(sess)); }
-function loadSession(){ const raw=localStorage.getItem(AUTH_KEY); if(raw){ try{ SESSION=JSON.parse(raw); }catch(e){ SESSION=null; } } }
+function saveSession(s){ SESSION=s; localStorage.setItem(AUTH_KEY,JSON.stringify(s)); }
+function loadSession(){ try{ SESSION=JSON.parse(localStorage.getItem(AUTH_KEY)||'null'); }catch(e){ SESSION=null; } }
 function clearSession(){ SESSION=null; localStorage.removeItem(AUTH_KEY); }
+function currentUser(){ return SESSION ? byId(SESSION.userId, DB.users) : null; }
 
-document.addEventListener('DOMContentLoaded', ()=>{
+/* ── MEDALS ── */
+const MEDALS = [
+  { id:'primera_tarea',  icon:'🥉', name:'Primera tarea',     desc:'Completa tu primera actividad',    check:(u)=> completedCount(u)>=1 },
+  { id:'cinco_tareas',   icon:'🥈', name:'Estudiante activo', desc:'Completa 5 actividades',           check:(u)=> completedCount(u)>=5 },
+  { id:'diez_tareas',    icon:'🥇', name:'Experto',           desc:'Completa 10 actividades',          check:(u)=> completedCount(u)>=10 },
+  { id:'pts_50',         icon:'⭐',  name:'Primeros 50 pts',   desc:'Acumula 50 puntos',                check:(u)=> (u.points||0)>=50 },
+  { id:'pts_100',        icon:'🏆', name:'Centenario',        desc:'Alcanza 100 puntos',               check:(u)=> (u.points||0)>=100 },
+  { id:'pts_500',        icon:'👑', name:'Maestro',           desc:'Alcanza 500 puntos',               check:(u)=> (u.points||0)>=500 },
+  { id:'blogger',        icon:'✍️',  name:'Blogger',           desc:'Publica tu primera entrada en blog',check:(u)=> DB.posts.some(p=>p.author===u.id) },
+  { id:'primer_evidencia',icon:'📎', name:'Documentado',      desc:'Sube tu primera evidencia',        check:(u)=> DB.activities.some(a=>(a.evidences||[]).some(e=>e.userId===u.id)) },
+];
+
+function completedCount(u){ return DB.activities.filter(a=>(a.completedBy||[]).includes(u.id)).length; }
+
+function checkMedals(userId){
+  const u = byId(userId, DB.users); if(!u) return;
+  u.medals = u.medals||[];
+  const newOnes = [];
+  MEDALS.forEach(m=>{ if(!u.medals.includes(m.id) && m.check(u)){ u.medals.push(m.id); newOnes.push(m); } });
+  if(newOnes.length){ saveDB(); newOnes.forEach(m=> showToast(`🏅 ¡Nueva medalla! ${m.icon} ${m.name}`)); renderSidebar(); }
+}
+
+/* ── TOAST ── */
+let toastTimer;
+function showToast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
   loadSession(); DB=loadDB();
-  setupAuthArea(); setupHandlers(); checkLoggedIn();
+  setupHandlers(); checkLoggedIn(); initChatbot();
 });
 
-const $ = s => document.querySelector(s);
-const $$ = s => document.querySelectorAll(s);
+const $ = s=>document.querySelector(s);
+const $$ = s=>document.querySelectorAll(s);
 
-function setupAuthArea(){
-  const authArea = $('#auth-area');
-  authArea.innerHTML = `<button class="btn" id="btn-open-auth">Iniciar / Registrar</button>`;
-  $('#btn-open-auth').addEventListener('click', ()=>{ showAuth(); });
+/* ── Auth area header ── */
+function renderAuthArea(){
+  const area=$('#auth-area');
+  const u=currentUser();
+  if(u){
+    area.innerHTML=`<div style="display:flex;gap:8px;align-items:center">
+      <div style="text-align:right">
+        <div style="font-weight:600;font-size:13px">${esc(u.name)}</div>
+        <div class="muted" style="font-size:11px">${esc(u.role)}</div>
+      </div>
+      <button class="btn ghost sm" id="hdr-profile">Perfil</button>
+      <button class="btn sm" id="hdr-logout">Salir</button>
+    </div>`;
+    $('#hdr-logout').onclick=()=>{ clearSession(); renderAuthArea(); checkLoggedIn(); };
+    $('#hdr-profile').onclick=()=>openModule('profile');
+  } else {
+    area.innerHTML=`<button class="btn" id="btn-open-auth">Entrar</button>`;
+    $('#btn-open-auth').onclick=()=>showAuth();
+  }
 }
 
-function showAuth(){
-  $('#auth-screen').classList.remove('hidden');
-  $('#dashboard-screen').classList.add('hidden');
-}
-
-function showDashboard(){
-  $('#auth-screen').classList.add('hidden');
-  $('#dashboard-screen').classList.remove('hidden');
-  renderDashboard();
-}
-
-function setupHandlers(){
-  $('#show-register').addEventListener('click', ()=>{
-    $('#login-form').classList.add('hidden');
-    $('#register-form').classList.remove('hidden');
-  });
-  $('#show-login').addEventListener('click', ()=>{
-    $('#login-form').classList.remove('hidden');
-    $('#register-form').classList.add('hidden');
-  });
-
-  $('#register-form').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const name=$('#reg-name').value.trim(), email=$('#reg-email').value.trim().toLowerCase();
-    const pass=$('#reg-pass').value, role=$('#reg-role').value;
-    if(!name||!email||!pass||!role){ alert('Completa todos los campos'); return; }
-    if(findUserByEmail(DB,email)){ alert('Ya existe una cuenta con ese correo'); return; }
-    const user={id:genId(),name,email,pass,role,points:0,level:1,avatar:null,institution:''};
-    DB.users.push(user); saveDB(DB);
-    alert('Cuenta creada. Inicia sesión');
-    $('#show-login').click(); $('#register-form').reset();
-  });
-
-  $('#login-form').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const email=$('#login-email').value.trim().toLowerCase(), pass=$('#login-pass').value;
-    const user=findUserByEmail(DB,email);
-    if(!user||user.pass!==pass){ alert('Credenciales incorrectas'); return; }
-    const sess={userId:user.id, token:genId(), created:Date.now()};
-    saveSession(sess); renderAuthHeader(); checkLoggedIn();
-  });
-
-  $('#toggle-contrast').addEventListener('click', ()=>{
-    document.body.classList.toggle('high-contrast');
-    if(document.body.classList.contains('high-contrast')){
-      document.documentElement.style.setProperty('--bg','#e6f0ff');
-      document.documentElement.style.setProperty('--card','#fffef8');
-      document.documentElement.style.setProperty('--accent','#14394f');
-    } else {
-      document.documentElement.style.removeProperty('--bg');
-      document.documentElement.style.removeProperty('--card');
-      document.documentElement.style.removeProperty('--accent');
-    }
-  });
-  $('#increase-text').addEventListener('click', ()=>{ adjustTextSize(1); });
-  $('#decrease-text').addEventListener('click', ()=>{ adjustTextSize(-1); });
-
-  document.addEventListener('click', (e)=>{
-    const el=e.target.closest('.module');
-    if(el){ openModule(el.dataset.module); }
-  });
-}
-
-function adjustTextSize(delta){
-  const cur=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
-  document.documentElement.style.fontSize=Math.max(12,Math.min(20,cur+delta))+'px';
-}
+function showAuth(){ $('#auth-screen').classList.remove('hidden'); $('#dashboard-screen').classList.add('hidden'); }
+function showDash(){ $('#auth-screen').classList.add('hidden'); $('#dashboard-screen').classList.remove('hidden'); renderDashboard(); }
 
 function checkLoggedIn(){
   loadSession();
-  if(SESSION&&SESSION.userId){
-    const user=byId(SESSION.userId,DB.users);
-    if(user){ renderAuthHeader(); showDashboard(); }
-    else{ clearSession(); showAuth(); }
-  } else { renderAuthHeader(); showAuth(); }
+  const u=currentUser();
+  renderAuthArea();
+  u ? showDash() : showAuth();
 }
 
-function renderAuthHeader(){
-  const authArea=$('#auth-area');
-  if(SESSION&&SESSION.userId){
-    const user=byId(SESSION.userId,DB.users);
-    authArea.innerHTML=`
-      <div style="display:flex;gap:8px;align-items:center">
-        <div style="text-align:right;margin-right:6px">
-          <div style="font-weight:600">${escapeHtml(user.name)}</div>
-          <div class="muted" style="font-size:12px">${escapeHtml(user.role)}</div>
-        </div>
-        <button class="btn secondary" id="header-profile">Mi perfil</button>
-        <button class="btn" id="header-logout">Salir</button>
-      </div>`;
-    $('#header-logout').addEventListener('click',()=>{ clearSession(); renderAuthHeader(); checkLoggedIn(); });
-    $('#header-profile').addEventListener('click',()=>{ openProfile(); });
-  } else {
-    authArea.innerHTML=`<button class="btn" id="btn-open-auth">Iniciar / Registrar</button>`;
-    $('#btn-open-auth').addEventListener('click',()=>{ showAuth(); });
-  }
+/* ── Handlers ── */
+function setupHandlers(){
+  $('#show-register').onclick=()=>{ $('#login-form').classList.add('hidden'); $('#register-form').classList.remove('hidden'); };
+  $('#show-login').onclick=()=>{ $('#login-form').classList.remove('hidden'); $('#register-form').classList.add('hidden'); };
+
+  $('#register-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=$('#reg-name').value.trim(), email=$('#reg-email').value.trim().toLowerCase();
+    const pass=$('#reg-pass').value, role=$('#reg-role').value;
+    if(!name||!email||!pass||!role){ showToast('⚠️ Completa todos los campos'); return; }
+    if(userByEmail(email)){ showToast('⚠️ Ya existe una cuenta con ese correo'); return; }
+    const u={id:gid(),name,email,pass,role,points:0,level:1,medals:[],visitedCourses:false,institution:''};
+    DB.users.push(u); saveDB();
+    showToast('✅ Cuenta creada. Inicia sesión.');
+    $('#show-login').click(); $('#register-form').reset();
+  });
+
+  $('#login-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const email=$('#login-email').value.trim().toLowerCase(), pass=$('#login-pass').value;
+    const u=userByEmail(email);
+    if(!u||u.pass!==pass){ showToast('❌ Credenciales incorrectas'); return; }
+    saveSession({userId:u.id,token:gid(),created:Date.now()});
+    checkLoggedIn();
+  });
+
+  $('#toggle-contrast').onclick=()=>{
+    document.body.classList.toggle('hc');
+    const on=document.body.classList.contains('hc');
+    document.documentElement.style.setProperty('--bg',on?'#e0ecff':'');
+    document.documentElement.style.setProperty('--muted',on?'#334':'');
+  };
+  $('#increase-text').onclick=()=>adjustFont(1);
+  $('#decrease-text').onclick=()=>adjustFont(-1);
+
+  document.addEventListener('click',e=>{
+    const m=e.target.closest('.module');
+    if(m && m.dataset.module) openModule(m.dataset.module);
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      const m=e.target.closest('.module');
+      if(m) openModule(m.dataset.module);
+    }
+  });
 }
 
+function adjustFont(d){
+  const cur=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
+  document.documentElement.style.fontSize=Math.max(12,Math.min(20,cur+d))+'px';
+}
+
+/* ── Dashboard ── */
 function renderDashboard(){
-  const user=byId(SESSION.userId,DB.users); if(!user) return;
-  $('#dash-title').textContent=`Hola, ${user.name.split(' ')[0]||user.name}`;
-  $('#dash-sub').textContent=`Rol: ${user.role}`;
-  $('#mini-avatar').textContent=(user.name[0]||'U').toUpperCase();
-  $('#mini-name').textContent=user.name;
-  $('#mini-role').textContent=user.role;
-  $('#points').textContent='Puntos: '+(user.points||0);
-  $('#level').textContent='Nivel: '+(user.level||1);
-  $('#progress-bar').style.width=Math.min(100,(user.points||0)%100)+'%';
-  $('#role-badge').textContent=user.role.charAt(0).toUpperCase()+user.role.slice(1);
-  $('#teacher-controls').style.display=(user.role==='profesor')?'block':'none';
-  $('#btn-create-activity').onclick=()=>{ openModule('create-activity'); };
-  $('#btn-create-course').onclick=()=>{ openModule('create-course'); };
-  $('#btn-profile').onclick=()=>{ openProfile(); };
-  $('#btn-logout').onclick=()=>{ clearSession(); renderAuthHeader(); checkLoggedIn(); };
+  const u=currentUser(); if(!u) return;
+  $('#dash-title').textContent=`Hola, ${u.name.split(' ')[0]}`;
+  $('#dash-sub').textContent=u.role==='profesor'?'Gestiona tus cursos y actividades':'Continúa tu aprendizaje de hoy';
+  $('#role-badge').textContent=u.role==='profesor'?'👨‍🏫 Profesor':'🎓 Estudiante';
+  $('#teacher-controls').style.display=u.role==='profesor'?'block':'none';
+  $('#btn-create-activity').onclick=()=>openModule('create-activity');
+  $('#btn-create-course').onclick=()=>openModule('create-course');
+  $('#btn-profile').onclick=()=>openModule('profile');
+  $('#btn-logout').onclick=()=>{ clearSession(); renderAuthArea(); checkLoggedIn(); };
+  renderSidebar();
   openModule('actividades');
 }
 
+function renderSidebar(){
+  const u=currentUser(); if(!u) return;
+  $('#mini-avatar').textContent=(u.name[0]||'U').toUpperCase();
+  $('#mini-name').textContent=u.name;
+  $('#mini-role').textContent=u.role==='profesor'?'👨‍🏫 Profesor':'🎓 Estudiante';
+  $('#pts-val').textContent=u.points||0;
+  $('#lvl-val').textContent=u.level||1;
+  const pct=(u.points||0)%100;
+  $('#progress-bar').style.width=pct+'%';
+  $('#progress-text').textContent=pct+'/100 pts';
+  // medals in sidebar (earned only, max 5)
+  u.medals=u.medals||[];
+  const container=$('#sidebar-medals');
+  container.innerHTML='';
+  if(u.medals.length===0){
+    container.innerHTML='<div class="muted" style="font-size:12px">Aún sin medallas — ¡completa actividades!</div>';
+  } else {
+    const shown=u.medals.slice(0,6);
+    shown.forEach(mid=>{
+      const m=MEDALS.find(x=>x.id===mid); if(!m) return;
+      const el=document.createElement('div');
+      el.className='medal earned'; el.title=m.name+': '+m.desc;
+      el.innerHTML=`<span class="medal-icon">${m.icon}</span><span class="medal-name">${m.name}</span>`;
+      container.appendChild(el);
+    });
+    if(u.medals.length>6){
+      const more=document.createElement('div');
+      more.className='medal earned';
+      more.textContent=`+${u.medals.length-6} más`;
+      container.appendChild(more);
+    }
+  }
+}
+
+/* ── Modules ── */
 function openModule(name){
   const area=$('#content-area'); area.innerHTML='';
+  const u=currentUser(); if(!u) return;
+
   if(name==='actividades'){
     area.appendChild(document.getElementById('activities-template').content.cloneNode(true));
     renderActivities();
+
   } else if(name==='create-activity'){
     area.appendChild(document.getElementById('create-activity-template').content.cloneNode(true));
-    $('#create-activity-form').addEventListener('submit',(e)=>{
+    $('#create-activity-form').addEventListener('submit',e=>{
       e.preventDefault();
-      const title=$('#act-title').value.trim(), desc=$('#act-desc').value.trim();
-      const points=parseInt($('#act-points').value)||10, due=$('#act-due').value||null, course=$('#act-course').value.trim()||null;
-      DB.activities.push({id:genId(),title,desc,points,due,course,created:Date.now(),author:SESSION.userId,assignedTo:null,completedBy:[]});
-      saveDB(DB); alert('Actividad creada'); openModule('actividades');
+      DB.activities.push({
+        id:gid(), title:$('#act-title').value.trim(), desc:$('#act-desc').value.trim(),
+        points:parseInt($('#act-points').value)||10, due:$('#act-due').value||null,
+        course:$('#act-course').value.trim()||null, created:Date.now(),
+        author:SESSION.userId, assignedTo:null, completedBy:[], evidences:[]
+      });
+      saveDB(); showToast('✅ Actividad creada'); openModule('actividades');
     });
+
   } else if(name==='cursos'){
+    u.visitedCourses=true; saveDB(); checkMedals(u.id);
     area.appendChild(document.getElementById('courses-template').content.cloneNode(true));
     renderCourses();
+
   } else if(name==='create-course'){
     area.appendChild(document.getElementById('create-course-template').content.cloneNode(true));
-    $('#create-course-form').addEventListener('submit',(e)=>{
+    $('#create-course-form').addEventListener('submit',e=>{
       e.preventDefault();
-      const cname=$('#course-name').value.trim(), desc=$('#course-desc').value.trim();
-      DB.courses.push({id:genId(),name:cname,desc,created:Date.now(),owner:SESSION.userId});
-      saveDB(DB); alert('Curso creado'); openModule('cursos');
+      DB.courses.push({ id:gid(), name:$('#course-name').value.trim(), desc:$('#course-desc').value.trim(), created:Date.now(), owner:SESSION.userId });
+      saveDB(); showToast('✅ Curso creado'); openModule('cursos');
     });
+
   } else if(name==='simulaciones'){
     area.appendChild(document.getElementById('simulations-template').content.cloneNode(true));
+
   } else if(name==='biblioteca'){
     area.appendChild(document.getElementById('biblioteca-template').content.cloneNode(true));
+
   } else if(name==='blog'){
     area.appendChild(document.getElementById('blog-template').content.cloneNode(true));
     renderBlog();
+
   } else if(name==='sobre'){
     area.appendChild(document.getElementById('about-template').content.cloneNode(true));
-    area.appendChild(document.getElementById('contact-template').content.cloneNode(true));
-    $('#contact-form').addEventListener('submit',(e)=>{
+    $('#contact-form').addEventListener('submit',e=>{
       e.preventDefault();
-      DB.contact.push({id:genId(),subj:$('#contact-subject').value.trim(),msg:$('#contact-message').value.trim(),from:SESSION.userId,created:Date.now()});
-      saveDB(DB); alert('Tu mensaje ha sido enviado (guardado localmente).'); $('#contact-form').reset();
+      DB.contact.push({ id:gid(), subj:$('#contact-subject').value.trim(), msg:$('#contact-message').value.trim(), from:SESSION.userId, created:Date.now() });
+      saveDB(); showToast('📨 Mensaje enviado (guardado localmente)'); $('#contact-form').reset();
     });
+
+  } else if(name==='profile'){
+    area.appendChild(document.getElementById('profile-template').content.cloneNode(true));
+    $('#profile-name').value=u.name;
+    $('#profile-email').value=u.email;
+    $('#profile-institution').value=u.institution||'';
+    $('#save-profile').onclick=()=>{
+      u.name=$('#profile-name').value.trim()||u.name;
+      u.institution=$('#profile-institution').value.trim();
+      saveDB(); showToast('✅ Perfil guardado'); renderSidebar(); renderAuthArea();
+    };
+
+  } else if(name==='reporte'){
+    if(u.role==='profesor'){
+      area.appendChild(document.getElementById('report-teacher-template').content.cloneNode(true));
+      renderTeacherReport();
+    } else {
+      area.appendChild(document.getElementById('report-student-template').content.cloneNode(true));
+      renderStudentReport();
+    }
   }
+  // scroll to content
+  area.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+/* ── Activities ── */
 function renderActivities(){
-  const list=$('#activities-list'), history=$('#activities-history');
-  const user=byId(SESSION.userId,DB.users);
-  list.innerHTML=''; history.innerHTML='';
-  if(user.role==='profesor'){
+  const list=$('#activities-list'), hist=$('#activities-history');
+  const u=currentUser(); list.innerHTML=''; hist.innerHTML='';
+
+  if(u.role==='profesor'){
+    if(DB.activities.length===0){ list.innerHTML=`<div class="muted" style="font-size:13px">No hay actividades creadas aún. Usa el panel lateral para crear una.</div>`; }
     DB.activities.slice().reverse().forEach(act=>{
-      const item=document.createElement('div'); item.className='item';
-      item.innerHTML=`<div><strong>${escapeHtml(act.title)}</strong><div class="meta">${escapeHtml(act.desc||'')}</div></div>
-        <div style="text-align:right"><div class="meta">Puntos: ${act.points}</div>
-          <div style="margin-top:6px">
-            <button class="btn ghost small" data-act="${act.id}" data-action="assign">Asignar a todos</button>
-            <button class="btn ghost small" data-act="${act.id}" data-action="delete">Eliminar</button>
-          </div></div>`;
+      const item=document.createElement('div'); item.className='item'; item.style.flexDirection='column'; item.style.alignItems='flex-start';
+      const evidCount=(act.evidences||[]).length;
+      item.innerHTML=`
+        <div style="display:flex;justify-content:space-between;width:100%;align-items:flex-start;gap:10px">
+          <div>
+            <strong style="font-size:14px">${esc(act.title)}</strong>
+            <div class="meta">${esc(act.desc||'')} ${act.due?`· Vence: ${act.due}`:''}</div>
+            <div class="meta" style="margin-top:4px">Puntos: <strong>${act.points}</strong> · Completada por: <strong>${(act.completedBy||[]).length}</strong> estudiante(s) · Evidencias: <strong>${evidCount}</strong></div>
+          </div>
+          <div style="display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap">
+            <button class="btn sm ghost" data-act="${act.id}" data-action="assign">Asignar</button>
+            <button class="btn sm ghost" data-act="${act.id}" data-action="evidences">Ver evidencias</button>
+            <button class="btn sm danger" data-act="${act.id}" data-action="delete">Eliminar</button>
+          </div>
+        </div>
+        <div class="evidences-panel-${act.id}" style="display:none;width:100%;margin-top:8px"></div>
+      `;
       list.appendChild(item);
     });
-    list.querySelectorAll('button').forEach(b=>{
+
+    list.querySelectorAll('button[data-action]').forEach(b=>{
       b.addEventListener('click',()=>{
         const id=b.dataset.act, action=b.dataset.action;
         if(action==='assign'){
-          const a=byId(id,DB.activities); if(a){ a.assignedTo='all'; saveDB(DB); alert('Asignada a todos'); renderActivities(); }
+          const a=byId(id,DB.activities); if(!a) return;
+          a.assignedTo='all'; saveDB(); showToast('✅ Asignada a todos los estudiantes'); renderActivities();
         } else if(action==='delete'){
-          if(confirm('Eliminar actividad?')){ DB.activities=DB.activities.filter(x=>x.id!==id); saveDB(DB); renderActivities(); }
+          if(confirm('¿Eliminar esta actividad?')){ DB.activities=DB.activities.filter(x=>x.id!==id); saveDB(); renderActivities(); }
+        } else if(action==='evidences'){
+          const panel=list.querySelector(`.evidences-panel-${id}`);
+          if(panel.style.display==='none'){
+            panel.style.display='block';
+            const a=byId(id,DB.activities);
+            const evs=(a?.evidences||[]);
+            if(evs.length===0){ panel.innerHTML=`<div class="muted" style="font-size:12px">No hay evidencias subidas para esta actividad.</div>`; }
+            else {
+              panel.innerHTML='<div class="kicker">Evidencias subidas</div>';
+              evs.forEach(ev=>{
+                const eu=byId(ev.userId,DB.users);
+                const row=document.createElement('div'); row.style.cssText='display:flex;align-items:center;gap:8px;margin-top:6px;font-size:13px';
+                row.innerHTML=`<span>👤 ${esc(eu?.name||'Estudiante')}</span><span class="meta">${esc(ev.fileName)}</span><a href="${ev.fileData}" download="${esc(ev.fileName)}" class="evidence-link" target="_blank">📥 Descargar</a>`;
+                panel.appendChild(row);
+              });
+            }
+            b.textContent='Ocultar';
+          } else { panel.style.display='none'; b.textContent='Ver evidencias'; }
         }
       });
     });
+
   } else {
+    // Student view
     const assigned=DB.activities.filter(a=>a.assignedTo==='all'||a.assignedTo===null);
-    if(assigned.length===0){ list.innerHTML=`<div class="muted">No tienes actividades asignadas.</div>`; }
-    else {
-      assigned.forEach(act=>{
-        const done=(act.completedBy||[]).includes(user.id);
-        const item=document.createElement('div'); item.className='item';
-        item.innerHTML=`<div><strong>${escapeHtml(act.title)}</strong><div class="meta">${escapeHtml(act.desc||'')}</div></div>
-          <div style="text-align:right"><div class="meta">Puntos: ${act.points}</div>
-            <div style="margin-top:8px">${done?'<span class="muted">Completada</span>':`<button class="btn" data-act="${act.id}" data-action="complete">Completar</button>`}</div>
-          </div>`;
-        list.appendChild(item);
-      });
-      list.querySelectorAll('button').forEach(b=>{
-        b.addEventListener('click',()=>{
-          const id=b.dataset.act, a=byId(id,DB.activities); if(!a) return;
-          if(confirm('Marcar actividad como completada y recibir puntos?')){
-            a.completedBy=a.completedBy||[];
-            if(!a.completedBy.includes(user.id)){
-              a.completedBy.push(user.id);
-              const u=byId(user.id,DB.users);
-              u.points=(u.points||0)+a.points;
-              u.level=Math.max(1,Math.floor(u.points/100)+1);
-              saveDB(DB); renderDashboard(); renderActivities();
-              alert('Actividad completada. Puntos otorgados: '+a.points);
+    if(assigned.length===0){ list.innerHTML=`<div class="muted" style="font-size:13px">No tienes actividades asignadas aún.</div>`; }
+
+    assigned.forEach(act=>{
+      const done=(act.completedBy||[]).includes(u.id);
+      const myEvidence=(act.evidences||[]).find(e=>e.userId===u.id);
+      const item=document.createElement('div'); item.className='item'; item.style.flexDirection='column'; item.style.alignItems='flex-start'; item.style.gap='8px';
+      item.innerHTML=`
+        <div style="display:flex;justify-content:space-between;width:100%;gap:10px">
+          <div>
+            <strong style="font-size:14px">${esc(act.title)}</strong>
+            <div class="meta">${esc(act.desc||'')} ${act.due?`· Vence: ${act.due}`:''}</div>
+            <div class="meta" style="margin-top:2px">🎯 <strong>${act.points}</strong> puntos</div>
+          </div>
+          <div style="flex-shrink:0">
+            ${done
+              ? `<span style="color:var(--success);font-size:13px;font-weight:600">✅ Completada</span>`
+              : `<button class="btn sm" data-act="${act.id}" data-action="complete">Completar</button>`
             }
+          </div>
+        </div>
+        <div class="evidence-section" style="width:100%">
+          <div style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:6px">📎 Evidencia</div>
+          ${myEvidence
+            ? `<div style="display:flex;align-items:center;gap:8px"><span class="meta">Archivo: ${esc(myEvidence.fileName)}</span><a href="${myEvidence.fileData}" download="${esc(myEvidence.fileName)}" class="evidence-link" target="_blank">📥 Ver/Descargar</a></div>`
+            : `<div class="evidence-upload-row">
+                <label class="file-label" for="file-${act.id}">📎 Subir evidencia</label>
+                <input type="file" id="file-${act.id}" accept="image/*,.pdf,.doc,.docx" style="display:none" data-act="${act.id}"/>
+                <span class="file-name-display" id="fname-${act.id}">Sin archivo seleccionado</span>
+                <button class="btn sm" id="upload-btn-${act.id}" data-act="${act.id}" style="display:none">Guardar evidencia</button>
+               </div>`
           }
-        });
+        </div>
+      `;
+      list.appendChild(item);
+
+      // file input change
+      if(!myEvidence){
+        const fi=list.querySelector(`#file-${act.id}`);
+        const uploadBtn=list.querySelector(`#upload-btn-${act.id}`);
+        const fnDisplay=list.querySelector(`#fname-${act.id}`);
+        if(fi){
+          fi.addEventListener('change',()=>{
+            const f=fi.files[0]; if(!f) return;
+            if(f.size>1048576){ showToast('⚠️ Archivo muy grande. Máximo 1 MB'); fi.value=''; return; }
+            fnDisplay.textContent=f.name;
+            uploadBtn.style.display='inline-block';
+          });
+          uploadBtn?.addEventListener('click',()=>{
+            const f=fi.files[0]; if(!f) return;
+            const reader=new FileReader();
+            reader.onload=()=>{
+              act.evidences=act.evidences||[];
+              act.evidences.push({ userId:u.id, fileName:f.name, fileType:f.type, fileData:reader.result, uploadedAt:Date.now() });
+              saveDB(); checkMedals(u.id); showToast('📎 Evidencia guardada exitosamente'); renderActivities();
+            };
+            reader.readAsDataURL(f);
+          });
+        }
+      }
+    });
+
+    // Complete button handler
+    list.querySelectorAll('button[data-action="complete"]').forEach(b=>{
+      b.addEventListener('click',()=>{
+        const act=byId(b.dataset.act,DB.activities); if(!act) return;
+        if(!confirm(`¿Marcar "${act.title}" como completada y recibir ${act.points} puntos?`)) return;
+        act.completedBy=act.completedBy||[];
+        if(!act.completedBy.includes(u.id)){
+          act.completedBy.push(u.id);
+          u.points=(u.points||0)+act.points;
+          u.level=Math.max(1,Math.floor(u.points/100)+1);
+          saveDB(); checkMedals(u.id); renderSidebar();
+          showToast(`🎉 ¡Completada! +${act.points} puntos`);
+          renderActivities();
+        }
       });
-    }
-    DB.activities.filter(a=>(a.completedBy||[]).includes(user.id)).forEach(a=>{
+    });
+
+    // Historial
+    const completed=DB.activities.filter(a=>(a.completedBy||[]).includes(u.id));
+    if(completed.length===0){ hist.innerHTML=`<div class="muted" style="font-size:12px">Aún no has completado ninguna actividad.</div>`; }
+    completed.forEach(a=>{
       const it=document.createElement('div'); it.className='item';
-      it.innerHTML=`<div>${escapeHtml(a.title)}</div><div class="meta">${new Date(a.created).toLocaleDateString()}</div>`;
-      history.appendChild(it);
+      it.innerHTML=`<div style="font-size:13px">${esc(a.title)}</div><div style="display:flex;align-items:center;gap:8px"><span class="meta">${new Date(a.created).toLocaleDateString()}</span><span style="color:var(--success);font-size:12px;font-weight:600">+${a.points}pts</span></div>`;
+      hist.appendChild(it);
     });
   }
 }
 
+/* ── Courses ── */
 function renderCourses(){
   const el=$('#courses-list'); el.innerHTML='';
-  if(DB.courses.length===0){ el.innerHTML='<div class="muted">No hay cursos creados.</div>'; return; }
+  if(DB.courses.length===0){ el.innerHTML='<div class="muted" style="font-size:13px">No hay cursos creados aún.</div>'; return; }
   DB.courses.slice().reverse().forEach(c=>{
     const item=document.createElement('div'); item.className='item';
-    item.innerHTML=`<div><strong>${escapeHtml(c.name)}</strong><div class="meta">${escapeHtml(c.desc||'')}</div></div>
-      <div style="text-align:right"><div class="meta">Instructor: ${escapeHtml((byId(c.owner,DB.users)||{}).name||'—')}</div></div>`;
+    const owner=byId(c.owner,DB.users);
+    item.innerHTML=`<div><strong>${esc(c.name)}</strong><div class="meta">${esc(c.desc||'')} · Instructor: ${esc(owner?.name||'—')}</div></div>`;
     el.appendChild(item);
   });
 }
 
+/* ── Blog ── */
 function renderBlog(){
-  const createArea=$('#blog-create'); createArea.innerHTML='';
-  const listArea=$('#blog-list'); listArea.innerHTML='';
-  createArea.appendChild(document.getElementById('blog-create-template').content.cloneNode(true));
-  $('#create-post-form').addEventListener('submit',(e)=>{
+  const createArea=$('#blog-create'), listArea=$('#blog-list');
+  createArea.innerHTML=''; listArea.innerHTML='';
+  createArea.appendChild(document.getElementById('blog-create-tpl').content.cloneNode(true));
+  $('#create-post-form').addEventListener('submit',e=>{
     e.preventDefault();
     const title=$('#post-title').value.trim(), content=$('#post-content').value.trim();
     if(!title||!content) return;
-    DB.posts.push({id:genId(),title,content,author:SESSION.userId,created:Date.now(),comments:[]});
-    saveDB(DB); $('#create-post-form').reset(); renderBlog();
+    DB.posts.push({id:gid(),title,content,author:SESSION.userId,created:Date.now(),comments:[]});
+    saveDB(); checkMedals(SESSION.userId); $('#create-post-form').reset(); renderBlog();
   });
-  if(DB.posts.length===0){ listArea.innerHTML='<div class="muted">No hay publicaciones aún.</div>'; return; }
+  if(DB.posts.length===0){ listArea.innerHTML='<div class="muted" style="font-size:13px">Sé el primero en publicar algo 🚀</div>'; return; }
   DB.posts.slice().reverse().forEach(p=>{
     const post=document.createElement('div'); post.className='post';
-    post.innerHTML=`<h4>${escapeHtml(p.title)}</h4><div class="meta">Por ${escapeHtml((byId(p.author,DB.users)||{}).name||'Usuario')} · ${new Date(p.created).toLocaleString()}</div><p class="mt">${escapeHtml(p.content)}</p>`;
-    const comments=document.createElement('div'); comments.style.marginTop='8px';
+    const author=byId(p.author,DB.users);
+    post.innerHTML=`<h4>${esc(p.title)}</h4><div class="meta">✍️ ${esc(author?.name||'Usuario')} · ${new Date(p.created).toLocaleString()}</div><p class="post-content">${esc(p.content)}</p>`;
+    const cmtArea=document.createElement('div'); cmtArea.style.marginTop='8px';
     (p.comments||[]).forEach(c=>{
-      const cm=document.createElement('div'); cm.className='item';
-      cm.innerHTML=`<div><strong>${escapeHtml((byId(c.author,DB.users)||{}).name||'Usuario')}</strong><div class="meta">${escapeHtml(c.text)}</div></div><div class="meta">${new Date(c.created).toLocaleString()}</div>`;
-      comments.appendChild(cm);
+      const ca=byId(c.author,DB.users);
+      const cm=document.createElement('div'); cm.className='comment-item';
+      cm.innerHTML=`<strong style="font-size:12px">${esc(ca?.name||'Usuario')}</strong><div class="meta">${esc(c.text)}</div>`;
+      cmtArea.appendChild(cm);
     });
-    const cform=document.createElement('form'); cform.className='mt';
-    cform.innerHTML=`<input placeholder="Escribe un comentario..." required style="padding:8px;border-radius:8px;border:1px solid #eee;width:100%"/><div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn" type="submit">Comentar</button></div>`;
-    cform.addEventListener('submit',(ev)=>{
-      ev.preventDefault();
-      const text=cform.querySelector('input').value.trim(); if(!text) return;
-      p.comments=p.comments||[];
-      p.comments.push({id:genId(),author:SESSION.userId,text,created:Date.now()});
-      saveDB(DB); renderBlog();
-    });
-    post.appendChild(comments); post.appendChild(cform); listArea.appendChild(post);
+    const cf=document.createElement('form'); cf.style.marginTop='8px';
+    cf.innerHTML=`<div style="display:flex;gap:8px"><input placeholder="Comentar..." required style="flex:1;padding:7px 11px;border-radius:8px;border:1.5px solid #e0e8f0;font-size:13px;font-family:var(--font)"/><button class="btn sm" type="submit">→</button></div>`;
+    cf.addEventListener('submit',ev=>{ ev.preventDefault(); const inp=cf.querySelector('input'); if(!inp.value.trim()) return; p.comments=p.comments||[]; p.comments.push({id:gid(),author:SESSION.userId,text:inp.value.trim(),created:Date.now()}); saveDB(); inp.value=''; renderBlog(); });
+    post.appendChild(cmtArea); post.appendChild(cf); listArea.appendChild(post);
   });
 }
 
-function openProfile(){
-  const area=$('#content-area'); area.innerHTML='';
-  area.appendChild(document.getElementById('profile-template').content.cloneNode(true));
-  const user=byId(SESSION.userId,DB.users);
-  $('#profile-name').value=user.name;
-  $('#profile-email').value=user.email;
-  $('#profile-institution').value=user.institution||'';
-  $('#save-profile').addEventListener('click',()=>{
-    user.name=$('#profile-name').value.trim();
-    user.institution=$('#profile-institution').value.trim();
-    saveDB(DB); alert('Perfil guardado'); renderDashboard();
+/* ── Student Report ── */
+function renderStudentReport(){
+  const u=currentUser(); if(!u) return;
+  const completed=DB.activities.filter(a=>(a.completedBy||[]).includes(u.id));
+  const total=DB.activities.length;
+  const ptsInLevel=(u.points||0)%100;
+
+  const stats=$('#rpt-stats'); stats.innerHTML='';
+  [
+    { val:u.points||0, lbl:'Puntos totales' },
+    { val:u.level||1,  lbl:'Nivel actual' },
+    { val:completed.length, lbl:'Actividades completadas' },
+    { val:(u.medals||[]).length, lbl:'Medallas ganadas' },
+  ].forEach(s=>{ const d=document.createElement('div'); d.className='stat-card'; d.innerHTML=`<div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div>`; stats.appendChild(d); });
+
+  $('#rpt-progress-lbl').textContent=`${ptsInLevel}/100 pts → Nivel ${(u.level||1)+1}`;
+  $('#rpt-progress-bar').style.width=ptsInLevel+'%';
+
+  const mg=$('#rpt-medals'); mg.innerHTML='';
+  MEDALS.forEach(m=>{
+    const earned=(u.medals||[]).includes(m.id);
+    const mc=document.createElement('div'); mc.className='medal-card '+(earned?'earned':'locked');
+    mc.innerHTML=`<div class="m-icon">${m.icon}</div><div class="m-name">${m.name}</div><div class="m-desc">${m.desc}</div>`;
+    mg.appendChild(mc);
   });
+
+  const ra=$('#rpt-activities');
+  if(completed.length===0){ ra.innerHTML='<div class="muted" style="font-size:13px">Aún no has completado ninguna actividad.</div>'; }
+  completed.forEach(a=>{
+    const it=document.createElement('div'); it.className='item';
+    const ev=(a.evidences||[]).find(e=>e.userId===u.id);
+    it.innerHTML=`<div><strong style="font-size:13px">${esc(a.title)}</strong><div class="meta">${esc(a.desc||'')}</div></div><div style="display:flex;align-items:center;gap:8px">${ev?`<a href="${ev.fileData}" download="${esc(ev.fileName)}" class="evidence-link">📎 ${esc(ev.fileName)}</a>`:''}<span style="color:var(--success);font-weight:600;font-size:13px">+${a.points}pts</span></div>`;
+    ra.appendChild(it);
+  });
+
+  // Export bindings
+  document.getElementById('rpt-export-pdf').onclick   = ()=> exportStudentPDF(u, completed);
+  document.getElementById('rpt-export-excel').onclick = ()=> exportStudentExcel(u, completed);
 }
 
-function escapeHtml(str=''){
+/* ── Teacher Report ── */
+function renderTeacherReport(){
+  const container=$('#rpt-students'); container.innerHTML='';
+  const students=DB.users.filter(u=>u.role==='estudiante');
+  if(students.length===0){ container.innerHTML='<div class="muted">No hay estudiantes registrados.</div>'; return; }
+
+  students.forEach(s=>{
+    const completed=DB.activities.filter(a=>(a.completedBy||[]).includes(s.id));
+    const total=DB.activities.length;
+    const pct=total>0?Math.round((completed.length/total)*100):0;
+
+    const row=document.createElement('div'); row.className='teacher-student-row';
+    row.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>
+          <h4>${esc(s.name)}</h4>
+          <div class="meta">${esc(s.email)} · Nivel ${s.level||1} · ${s.points||0} pts · ${(s.medals||[]).length} medallas</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${(s.medals||[]).map(mid=>{ const m=MEDALS.find(x=>x.id===mid); return m?`<span title="${m.name}">${m.icon}</span>`:''; }).join('')}
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px">
+        <span>Actividades: ${completed.length}/${total}</span><span>${pct}%</span>
+      </div>
+      <div class="mini-progress"><i style="width:${pct}%;display:block;height:100%;background:linear-gradient(90deg,var(--accent),#5b9bdc)"></i></div>
+      <div style="margin-top:6px;font-size:12px;color:var(--muted)">
+        Evidencias subidas: ${DB.activities.reduce((n,a)=>n+((a.evidences||[]).filter(e=>e.userId===s.id).length),0)}
+      </div>
+    `;
+    container.appendChild(row);
+  });
+
+  // Export bindings
+  document.getElementById('rpt-export-pdf').onclick   = ()=> exportTeacherPDF(students);
+  document.getElementById('rpt-export-excel').onclick = ()=> exportTeacherExcel(students);
+}
+
+/* ── CHATBOT ── */
+let chatHistory=[], chatOpen=false, chatThinking=false, chatBuilt=false;
+
+function initChatbot(){
+  $('#chat-fab').onclick=toggleChat;
+  $('#chat-close').onclick=()=>{
+    chatOpen=false;
+    $('#chat-panel').classList.remove('open');
+    $('#chat-fab').classList.remove('open');
+  };
+}
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  $('#chat-panel').classList.toggle('open',chatOpen);
+  $('#chat-fab').classList.toggle('open',chatOpen);
+  if(chatOpen && !chatBuilt){ chatBuilt=true; buildChatBody(); }
+}
+
+function getApiKey(){ return localStorage.getItem(AKEY_KEY)||DEFAULT_API_KEY; }
+function saveApiKey(k){ localStorage.setItem(AKEY_KEY,k); }
+
+function buildChatBody(){
+  const body=$('#chat-body'); body.innerHTML='';
+  const key=getApiKey();
+  if(!key){ buildApikeyScreen(); return; }
+  buildChatScreen();
+  appendMsg('ai','¡Hola! ✦ Soy LeFoBot, tu asistente educativo. Puedes preguntarme sobre cualquier tema académico, estrategias de estudio o cómo usar la plataforma. ¿En qué te ayudo?');
+}
+
+function buildApikeyScreen(){
+  const body=$('#chat-body'); body.innerHTML='';
+  const div=document.createElement('div');
+  div.style.cssText='padding:18px;display:flex;flex-direction:column;gap:12px;flex:1';
+  div.innerHTML=`
+    <div style="text-align:center;padding:10px 0">
+      <div style="font-size:28px;margin-bottom:6px">✦</div>
+      <div style="font-weight:700;font-size:15px">Configura LeFoBot</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5">
+        Necesitas una API key <strong>gratuita</strong> de Groq para activar el asistente.
+      </div>
+    </div>
+    <div style="background:#f0faf6;border:1.5px solid #10a37f33;border-radius:10px;padding:12px;font-size:12px;line-height:1.7">
+      <strong>Cómo obtenerla gratis:</strong><br>
+      1. Ve a <a href="https://console.groq.com" target="_blank" style="color:#10a37f;font-weight:600">console.groq.com</a><br>
+      2. Crea una cuenta gratuita<br>
+      3. Ve a "API Keys" → "Create API Key"<br>
+      4. Pega la clave aquí abajo
+    </div>
+    <input type="password" id="apikey-input" placeholder="gsk_..." style="padding:10px;border-radius:9px;border:1.5px solid #e0e8f0;font-size:13px;font-family:monospace;width:100%"/>
+    <button id="apikey-save" style="background:linear-gradient(135deg,#10a37f,#1a7f64);color:white;border:none;border-radius:10px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Activar LeFoBot →</button>
+  `;
+  body.appendChild(div);
+  div.querySelector('#apikey-save').onclick=()=>{
+    const k=div.querySelector('#apikey-input').value.trim();
+    if(!k.startsWith('gsk_')&&!k.startsWith('sk-')){ showToast('⚠️ Pega una key válida (empieza con gsk_ o sk-)'); return; }
+    saveApiKey(k); chatBuilt=false; buildChatBody();
+  };
+  div.querySelector('#apikey-input').addEventListener('keydown',e=>{ if(e.key==='Enter') div.querySelector('#apikey-save').click(); });
+}
+
+function buildChatScreen(){
+  const body=$('#chat-body'); body.innerHTML='';
+
+  const msgs=document.createElement('div');
+  msgs.className='chat-messages'; msgs.id='chat-msgs';
+  body.appendChild(msgs);
+
+  const inpArea=document.createElement('div');
+  inpArea.className='chat-input-area';
+  inpArea.innerHTML=`
+    <input type="text" id="chat-inp" placeholder="Escribe tu pregunta..." maxlength="400" autocomplete="off"/>
+    <button class="chat-send" id="chat-send-btn" title="Enviar">➤</button>
+  `;
+  body.appendChild(inpArea);
+
+  // bind after DOM insertion
+  const input=body.querySelector('#chat-inp');
+  const sendBtn=body.querySelector('#chat-send-btn');
+
+  async function sendFn(){
+    const txt=input.value.trim();
+    if(!txt||chatThinking) return;
+    input.value='';
+    appendMsg('user',txt);
+    chatHistory.push({role:'user',content:txt});
+    await askOpenAI();
+  }
+
+  sendBtn.addEventListener('click', sendFn);
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendFn(); } });
+  input.focus();
+}
+
+function appendMsg(role,text){
+  const msgs=document.getElementById('chat-msgs');
+  if(!msgs) return null;
+  const m=document.createElement('div'); m.className='msg '+role;
+  m.textContent=text; msgs.appendChild(m);
+  msgs.scrollTop=msgs.scrollHeight;
+  return m;
+}
+
+async function askOpenAI(){
+  chatThinking=true;
+  const sendBtn=document.getElementById('chat-send-btn');
+  if(sendBtn) sendBtn.disabled=true;
+  const thinking=appendMsg('thinking','LeFoBot está escribiendo...');
+  try {
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+getApiKey()
+      },
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        max_tokens:700,
+        temperature:0.7,
+        messages:[
+          { role:'system', content:`Eres LeFoBot, asistente educativo amigable y profesional de LeFodigital.
+Ayudas a estudiantes y profesores con:
+- Dudas académicas (matemáticas, ciencias, español, historia, geografía, etc.)
+- Estrategias de estudio, técnicas de aprendizaje y organización
+- Uso de la plataforma LeFodigital (actividades, cursos, simulaciones, blog, biblioteca)
+- Motivación y consejos para el aprendizaje
+Responde SIEMPRE en español, de forma clara, amigable y concisa. Máximo 3 párrafos cortos.` },
+          ...chatHistory.slice(-10)
+        ]
+      })
+    });
+
+    if(!res.ok){
+      const errData=await res.json().catch(()=>({}));
+      const msg=errData.error?.message||'';
+      if(res.status===401||msg.includes('Invalid API Key')) throw new Error('AUTH_ERROR');
+      if(res.status===429) throw new Error('RATE_LIMIT');
+      if(res.status===503||res.status===502) throw new Error('UNAVAILABLE');
+      throw new Error(msg||'HTTP '+res.status);
+    }
+
+    const data=await res.json();
+    const reply=data.choices?.[0]?.message?.content?.trim()||'No pude generar respuesta, intenta de nuevo.';
+    if(thinking) thinking.remove();
+    appendMsg('ai',reply);
+    chatHistory.push({role:'assistant',content:reply});
+
+  } catch(err){
+    if(thinking) thinking.remove();
+    if(err.message==='AUTH_ERROR'){
+      appendMsg('ai','❌ API key inválida. Redirigiendo para actualizarla...');
+      saveApiKey(''); chatBuilt=false;
+      setTimeout(()=>{ buildChatBody(); },2000);
+    } else if(err.message==='RATE_LIMIT'){
+      appendMsg('ai','⏳ Demasiadas solicitudes. Espera unos segundos e intenta de nuevo.');
+    } else if(err.message==='UNAVAILABLE'){
+      appendMsg('ai','🔧 Servicio momentáneamente no disponible. Intenta en unos minutos.');
+    } else if(err.name==='TypeError'&&err.message.includes('fetch')){
+      appendMsg('ai','🌐 Sin conexión a internet. Verifica tu red e intenta de nuevo.');
+    } else {
+      appendMsg('ai','❌ Error inesperado: '+err.message);
+    }
+  } finally {
+    chatThinking=false;
+    const btn2=document.getElementById('chat-send-btn');
+    if(btn2) btn2.disabled=false;
+  }
+}
+
+/* ══════════════════════════════════════════
+   EXPORT FUNCTIONS — PDF & Excel
+══════════════════════════════════════════ */
+
+function pdfHeader(doc, title, subtitle){
+  const W=doc.internal.pageSize.getWidth();
+  // colored header bar
+  doc.setFillColor(47,90,134);
+  doc.rect(0,0,W,28,'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(14); doc.setFont('helvetica','bold');
+  doc.text('LeFodigital', 14, 11);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text('La educación que evoluciona contigo', 14, 18);
+  // title block
+  doc.setTextColor(30,45,64);
+  doc.setFontSize(15); doc.setFont('helvetica','bold');
+  doc.text(title, 14, 40);
+  doc.setFontSize(10); doc.setFont('helvetica','normal');
+  doc.setTextColor(107,122,144);
+  doc.text(subtitle, 14, 48);
+  doc.text('Generado: '+new Date().toLocaleString('es-CO'), W-14, 48, {align:'right'});
+  // separator line
+  doc.setDrawColor(220,228,240); doc.setLineWidth(0.5);
+  doc.line(14, 52, W-14, 52);
+  return 58; // next Y position
+}
+
+/* ── Student PDF ── */
+function exportStudentPDF(u, completed){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  let y = pdfHeader(doc, 'Reporte de Progreso', `Estudiante: ${u.name} · ${u.email}`);
+
+  // Stats row
+  const stats=[
+    ['Puntos totales', u.points||0],
+    ['Nivel actual',   u.level||1],
+    ['Actividades completadas', completed.length],
+    ['Medallas ganadas', (u.medals||[]).length],
+  ];
+  const colW=(W-28)/4;
+  stats.forEach(([lbl,val],i)=>{
+    const x=14+i*colW;
+    doc.setFillColor(247,250,255);
+    doc.roundedRect(x,y,colW-3,20,2,2,'F');
+    doc.setTextColor(47,90,134); doc.setFontSize(18); doc.setFont('helvetica','bold');
+    doc.text(String(val), x+(colW-3)/2, y+11, {align:'center'});
+    doc.setTextColor(107,122,144); doc.setFontSize(8); doc.setFont('helvetica','normal');
+    doc.text(lbl, x+(colW-3)/2, y+17, {align:'center'});
+  });
+  y+=26;
+
+  // Progress bar
+  const ptsInLevel=(u.points||0)%100;
+  doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(30,45,64);
+  doc.text(`Progreso al Nivel ${(u.level||1)+1}`, 14, y);
+  doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(107,122,144);
+  doc.text(`${ptsInLevel}/100 puntos`, W-14, y, {align:'right'});
+  y+=4;
+  doc.setFillColor(228,236,247); doc.roundedRect(14,y,W-28,5,2,2,'F');
+  doc.setFillColor(47,90,134);
+  doc.roundedRect(14,y,(W-28)*(ptsInLevel/100),5,2,2,'F');
+  y+=12;
+
+  // Medals
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(30,45,64);
+  doc.text('Medallas obtenidas', 14, y); y+=5;
+  const earnedMedals=MEDALS.filter(m=>(u.medals||[]).includes(m.id));
+  if(earnedMedals.length===0){
+    doc.setFontSize(9); doc.setFont('helvetica','italic'); doc.setTextColor(107,122,144);
+    doc.text('Sin medallas aún.', 14, y); y+=8;
+  } else {
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(107,122,144);
+    doc.text(earnedMedals.map(m=>m.name).join('  ·  '), 14, y); y+=8;
+  }
+
+  // Activities table
+  if(completed.length>0){
+    doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(30,45,64);
+    doc.text('Actividades completadas', 14, y); y+=4;
+    doc.autoTable({
+      startY: y,
+      head:[['#','Actividad','Descripción','Puntos','Evidencia']],
+      body: completed.map((a,i)=>{
+        const ev=(a.evidences||[]).find(e=>e.userId===u.id);
+        return [i+1, a.title, a.desc||'—', '+'+a.points+' pts', ev?ev.fileName:'Sin evidencia'];
+      }),
+      styles:{ fontSize:9, cellPadding:3, textColor:[30,45,64] },
+      headStyles:{ fillColor:[47,90,134], textColor:255, fontStyle:'bold', fontSize:9 },
+      alternateRowStyles:{ fillColor:[247,250,255] },
+      columnStyles:{ 0:{cellWidth:8}, 3:{cellWidth:22, halign:'center'}, 4:{cellWidth:36} },
+      margin:{left:14,right:14},
+    });
+  }
+
+  // Footer
+  const pages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+    doc.setPage(i);
+    doc.setFontSize(8); doc.setTextColor(107,122,144); doc.setFont('helvetica','normal');
+    doc.text('LeFodigital · admin@lefodigital.demo', 14, 290);
+    doc.text(`Pág. ${i}/${pages}`, W-14, 290, {align:'right'});
+  }
+
+  doc.save(`Reporte_${u.name.replace(/ /g,'_')}_${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('📄 PDF generado exitosamente');
+}
+
+/* ── Student Excel ── */
+function exportStudentExcel(u, completed){
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Resumen
+  const resumen=[
+    ['REPORTE DE PROGRESO - LEFODIGITAL'],
+    [],
+    ['Estudiante:', u.name],
+    ['Correo:', u.email],
+    ['Institución:', u.institution||'—'],
+    ['Fecha:', new Date().toLocaleString('es-CO')],
+    [],
+    ['ESTADÍSTICAS'],
+    ['Puntos totales', u.points||0],
+    ['Nivel actual', u.level||1],
+    ['Progreso al siguiente nivel', `${(u.points||0)%100}/100 pts`],
+    ['Actividades completadas', completed.length],
+    ['Total de actividades', DB.activities.length],
+    ['Medallas ganadas', (u.medals||[]).length],
+    [],
+    ['MEDALLAS OBTENIDAS'],
+    ...MEDALS.map(m=>[(u.medals||[]).includes(m.id)?'✓':'✗', m.name, m.desc])
+  ];
+  const ws1 = XLSX.utils.aoa_to_sheet(resumen);
+  ws1['!cols']=[{wch:28},{wch:36},{wch:40}];
+  ws1['A1'].s={font:{bold:true,sz:13}};
+  XLSX.utils.book_append_sheet(wb, ws1, 'Resumen');
+
+  // Sheet 2: Actividades
+  const actData=[
+    ['#','Actividad','Descripción','Puntos obtenidos','Evidencia subida','Fecha actividad'],
+    ...completed.map((a,i)=>{
+      const ev=(a.evidences||[]).find(e=>e.userId===u.id);
+      return [i+1, a.title, a.desc||'', '+'+a.points, ev?ev.fileName:'No', new Date(a.created).toLocaleDateString('es-CO')];
+    })
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(actData);
+  ws2['!cols']=[{wch:5},{wch:30},{wch:40},{wch:16},{wch:30},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Actividades');
+
+  XLSX.writeFile(wb, `Reporte_${u.name.replace(/ /g,'_')}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  showToast('📊 Excel generado exitosamente');
+}
+
+/* ── Teacher PDF ── */
+function exportTeacherPDF(students){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation:'landscape', unit:'mm', format:'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  let y = pdfHeader(doc, 'Reporte General de Estudiantes', `Profesor: ${currentUser().name} · ${DB.activities.length} actividades en plataforma`);
+
+  // Summary stats
+  const totalStudents=students.length;
+  const avgPoints=totalStudents>0?Math.round(students.reduce((s,u)=>s+(u.points||0),0)/totalStudents):0;
+  const avgLevel=totalStudents>0?(students.reduce((s,u)=>s+(u.level||1),0)/totalStudents).toFixed(1):0;
+  const totalMedals=students.reduce((s,u)=>s+(u.medals||[]).length,0);
+
+  const summStats=[['Total estudiantes',totalStudents],['Promedio puntos',avgPoints],['Promedio nivel',avgLevel],['Total medallas otorgadas',totalMedals]];
+  const cW=(W-28)/4;
+  summStats.forEach(([lbl,val],i)=>{
+    const x=14+i*cW;
+    doc.setFillColor(247,250,255); doc.roundedRect(x,y,cW-3,18,2,2,'F');
+    doc.setTextColor(47,90,134); doc.setFontSize(16); doc.setFont('helvetica','bold');
+    doc.text(String(val), x+(cW-3)/2, y+10, {align:'center'});
+    doc.setTextColor(107,122,144); doc.setFontSize(8); doc.setFont('helvetica','normal');
+    doc.text(lbl, x+(cW-3)/2, y+15, {align:'center'});
+  });
+  y+=24;
+
+  // Students table
+  doc.autoTable({
+    startY: y,
+    head:[['Estudiante','Correo','Nivel','Puntos','Actividades','Progreso','Medallas','Evidencias']],
+    body: students.map(s=>{
+      const done=DB.activities.filter(a=>(a.completedBy||[]).includes(s.id)).length;
+      const total=DB.activities.length;
+      const pct=total>0?Math.round((done/total)*100):0;
+      const evCount=DB.activities.reduce((n,a)=>n+((a.evidences||[]).filter(e=>e.userId===s.id).length),0);
+      const medalNames=(s.medals||[]).map(mid=>{ const m=MEDALS.find(x=>x.id===mid); return m?m.name:''; }).filter(Boolean).join(', ')||'—';
+      return [s.name, s.email, s.level||1, s.points||0, `${done}/${total}`, `${pct}%`, medalNames, evCount];
+    }),
+    styles:{ fontSize:8.5, cellPadding:3, textColor:[30,45,64] },
+    headStyles:{ fillColor:[47,90,134], textColor:255, fontStyle:'bold', fontSize:9 },
+    alternateRowStyles:{ fillColor:[247,250,255] },
+    columnStyles:{ 2:{halign:'center'}, 3:{halign:'center'}, 4:{halign:'center'}, 5:{halign:'center',fontStyle:'bold'}, 7:{halign:'center'} },
+    margin:{left:14,right:14},
+  });
+
+  const pages=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pages;i++){
+    doc.setPage(i);
+    doc.setFontSize(8); doc.setTextColor(107,122,144); doc.setFont('helvetica','normal');
+    doc.text('LeFodigital · admin@lefodigital.demo', 14, 200);
+    doc.text(`Pág. ${i}/${pages}`, W-14, 200, {align:'right'});
+  }
+
+  doc.save(`Reporte_Estudiantes_${new Date().toISOString().slice(0,10)}.pdf`);
+  showToast('📄 PDF generado exitosamente');
+}
+
+/* ── Teacher Excel ── */
+function exportTeacherExcel(students){
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Resumen general
+  const avgPoints=students.length?Math.round(students.reduce((s,u)=>s+(u.points||0),0)/students.length):0;
+  const resumen=[
+    ['REPORTE GENERAL DE ESTUDIANTES - LEFODIGITAL'],
+    [],
+    ['Profesor:', currentUser().name],
+    ['Correo:', currentUser().email],
+    ['Fecha exportación:', new Date().toLocaleString('es-CO')],
+    [],
+    ['RESUMEN GENERAL'],
+    ['Total estudiantes', students.length],
+    ['Total actividades en plataforma', DB.activities.length],
+    ['Promedio de puntos', avgPoints],
+    ['Total medallas otorgadas', students.reduce((s,u)=>s+(u.medals||[]).length,0)],
+  ];
+  const ws1=XLSX.utils.aoa_to_sheet(resumen);
+  ws1['!cols']=[{wch:32},{wch:30}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Resumen general');
+
+  // Sheet 2: Detalle estudiantes
+  const headers=['Nombre','Correo','Institución','Nivel','Puntos','Actividades completadas','Total actividades','Progreso %','Medallas','Evidencias subidas'];
+  const rows=students.map(s=>{
+    const done=DB.activities.filter(a=>(a.completedBy||[]).includes(s.id)).length;
+    const total=DB.activities.length;
+    const pct=total>0?Math.round((done/total)*100):0;
+    const evCount=DB.activities.reduce((n,a)=>n+((a.evidences||[]).filter(e=>e.userId===s.id).length),0);
+    const medalNames=(s.medals||[]).map(mid=>{ const m=MEDALS.find(x=>x.id===mid); return m?m.name:''; }).filter(Boolean).join(', ')||'Sin medallas';
+    return [s.name, s.email, s.institution||'—', s.level||1, s.points||0, done, total, pct+'%', medalNames, evCount];
+  });
+  const ws2=XLSX.utils.aoa_to_sheet([headers,...rows]);
+  ws2['!cols']=[{wch:26},{wch:28},{wch:22},{wch:10},{wch:10},{wch:22},{wch:18},{wch:12},{wch:40},{wch:18}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Detalle estudiantes');
+
+  // Sheet 3: Actividades por estudiante
+  const actRows=[['Estudiante','Actividad','Descripción','Puntos','Evidencia']];
+  students.forEach(s=>{
+    DB.activities.filter(a=>(a.completedBy||[]).includes(s.id)).forEach(a=>{
+      const ev=(a.evidences||[]).find(e=>e.userId===s.id);
+      actRows.push([s.name, a.title, a.desc||'', a.points, ev?ev.fileName:'Sin evidencia']);
+    });
+  });
+  const ws3=XLSX.utils.aoa_to_sheet(actRows);
+  ws3['!cols']=[{wch:26},{wch:30},{wch:40},{wch:12},{wch:30}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Actividades por estudiante');
+
+  XLSX.writeFile(wb, `Reporte_Estudiantes_${new Date().toISOString().slice(0,10)}.xlsx`);
+  showToast('📊 Excel generado exitosamente');
+}
+
+/* ── Escape HTML ── */
+function esc(str=''){
   return String(str).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 </script>
